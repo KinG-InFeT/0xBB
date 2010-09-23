@@ -1,0 +1,36 @@
+							/~\	0xBB - Bulletin Board ~ README  /~\
+						
+Link: http://0xproject.hellospace.net/#0xBB
+
+								/~\ INSTALLAZIONE /~\
+Per installare la board seguire le seguenti operazioni:
+
+	1) Uplodare tutti i file nella root o nella cartella del vostro spazio web *(Note in fondo pagina)*
+	2) Accedere al sito o alla cartella dove avete uplodato tutti i file e si avvierà immediatamente l'installazione
+	3) Inserire i dati necessari per l'installazione e proseguite
+	4) Cancellare il file install.php (se non si è riusciti a cancellarlo tramite l'installazione stessa)
+	5) Godetevi la vostra Bulletin Board
+	
+									/~\ UPGRADE /~\
+
+UPGRADE da RC1 -> RC2 Basta solo eliminare tutti i file tranne il file config.php, e successivamente caricare
+tutti i nuovi file del nuovo pacchetto RC2 tranne il file config.php e il file install.php.
+L'upgrade è avvenuto con successo :P
+
+									/~\ LICENZA /~\
+
+La licenza di questo CMS è di tipo GPL quindi potrete ridistribbuire il pacchetto come volete modificarlo 
+e farci quello che volete, basta che mettiate la fonte e non eliminate i commenti dalle pagine 
+
+    							/~\ DOCUMENTAZIONE /~\
+
+La documentazione (ringrazziamenti, autore, licenza ecc...) la trovate nella cartella docs rilasciata con il pacchetto
+
+*(NOTE)*
+Attenzione! Il CMS è stato creato sopra la piattaforma PHP versione superiore a 5.0.0, quindi qualora l'hosting
+non ha come default il PHP5 richiedetelo , oppure come nel caso di altervista dove basta creare una cartella chiamata php5
+e uplodare tutto dentro così la piattaforma di altervista capisce che in quella cartella bisogna usare una versione del
+PHP superiore o uguale a 5.0.0
+
+
+Project By KinG-InFeT
