@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC1
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -61,15 +61,19 @@ switch ($mode) {
 </table><br /><br />
 		<a href = 'pm.php?mode=3'>[ New PM ]</a>
 		<?php
-		break;
+	break;
+	
 	case 2:
 		$id = (int) $_GET ['id'];
 		if (!$id)
-			die ("ID non specificato!");
+			die ("<br /><br /><br />\n<div class=\"error_msg\" align=\"center\">\n<b>Errore!</b>ID non Specificato\n<br /><br />\n<a href=\"index.php\">Torna al CP dei PM</a>\n</div>");
+			
 		$query = "SELECT * FROM ".PREFIX."pm WHERE id = '{$id}'";
 		$row   = mysql_fetch_row (mysql_query ($query));
+		
 		if ((!$row [0]) || ($row [2] != $username))
 			die ("<br /><br /><br />\n<div class=\"error_msg\" align=\"center\">\n<b>Errore!</b>Non sei autorizzato a leggere questo PM!\n<br /><br />\n<a href=\"index.php\">Torna alla Index</a>\n</div>");
+			
 		if ($row [5]) {
 			$query = "UPDATE ".PREFIX."pm SET new = 0 WHERE id = '{$id}'";
 			mysql_query ($query);
@@ -84,7 +88,8 @@ switch ($mode) {
 		print $row[4];
 		echo "<br />\n<hr />\n<p><a href = 'pm.php?mode=3&id={$row [0]}'>[ Rispondi ]</a>\n";
 		echo "<a href = 'pm.php?mode=4&id={$row [0]}'>[ Cancella ]</a></p>";
-		break;
+	break;
+	
 	case 3:
 	
 		@$to    = clear ($_REQUEST['to']);
@@ -94,8 +99,10 @@ switch ($mode) {
 		if (($title) && ($to) && ($data)) {
 			$query = "SELECT id FROM ".PREFIX."users WHERE username = '{$to}'";
 			$row   = mysql_fetch_row (mysql_query ($query));
+			
 			if (!$row [0])
 				die ("<br /><br /><br />\n<div class=\"error_msg\" align=\"center\">\n<b>Errore!</b>l'Username specificato non è valido!\n<br /><br />\n<a href=\"index.php\">Torna alla Index</a>\n</div>");
+				
 			$query = "INSERT INTO ".PREFIX."pm (from_usr, to_usr, title, data, new) VALUES ('{$username}', '{$to}', '{$title}', '{$data}', 1)";
 			mysql_query ($query) or die("SQL Error:".mysql_error());
 			header ("Location: pm.php");
@@ -103,6 +110,7 @@ switch ($mode) {
 			@$id   = (int) $_GET ['id'];
 			$query = "SELECT from_usr, to_usr, title FROM ".PREFIX."pm WHERE id = '{$id}'";
 			$row   = mysql_fetch_row (mysql_query ($query));
+			
 			if (($row [0]) && ($row [1] == $username)) {
 				$to = $row [0];
 				if (!preg_match ("|^Re\:|", $row [2]))
@@ -121,7 +129,8 @@ switch ($mode) {
 			</form>
 			<?php
 		}
-		break;
+	break;
+	
 	case 4:
 		$id    = (int) $_GET ['id'];
 		$query = "SELECT to_usr FROM ".PREFIX."pm WHERE id = '{$id}'";
@@ -133,7 +142,8 @@ switch ($mode) {
 		}
 		else 
 			die ("<br /><br /><br />\n<div class=\"error_msg\" align=\"center\">\n<b>Errore!</b>Non sei autorizzato a leggere questo PM!\n<br /><br />\n<a href=\"index.php\">Torna alla Index</a>\n</div>");
-		break;
+	break;
+	
 	default:
 		header ("Location: pm.php?mode=1");
 	break;

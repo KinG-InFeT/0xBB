@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC2
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -31,6 +31,11 @@ if (!(is_writable('./config.php')))
 
 if (!( file_exists('./config.php')))
 	die("File config.php inesistente!");
+	
+if(!(phpversion() >= '5.2.0')) {
+	die('<h2 align="center">In questo server è installata una versione di PHP invferiore alla 5.2.0, quindi 0xSentinel non potrà essere installato causa futuri maltunzionamenti!<br />
+		Si contatti l\'amministratore del server per aggiornare la versione di PHP installata sul server almeno alla 5.2.0</h2>');
+}
 
 if(@$_GET['action'] == 'install') {
 
@@ -44,6 +49,25 @@ if (isset($_POST['descrizione'])
 	&& isset($_POST['email_admin'])
 	&& isset($_POST['site_name'])) {
 	
+//Dati Connessione MySQL
+$db_host = trim($_POST['host']);
+$db_user = trim($_POST['user']);
+$db_pass = trim($_POST['pass']);
+$db_name = trim($_POST['name']);
+
+/* controllo connessione avvenuta :P */
+$db = mysql_connect ($db_host , $db_user ,$db_pass);
+
+if($db == FALSE)
+	die("<script>alert(\"Errore!\nControllare i dati per la connessione al database MySQL\"); window.location=\"".$_SERVER['PHP_SELF']."\";</script>");
+
+$select_db = mysql_select_db ($db_name,$db);
+
+if($select_db == FALSE)
+	die("<script>alert(\"Errore!\nControllare i dati per la connessione al database MySQL\"); window.location=\"".$_SERVER['PHP_SELF']."\";</script>");
+	
+//*******************************
+	
 //Vari Dati
 $site_name   = trim(htmlspecialchars($_POST['site_name']));
 $descrizione = trim(htmlspecialchars($_POST['descrizione']));
@@ -56,22 +80,6 @@ $email_admin    = trim(mysql_real_escape_string($_POST['email_admin']));
 $msn_admin      = trim(mysql_real_escape_string($_POST['msn']));
 $web_site_admin = trim(mysql_real_escape_string($_POST['web_site']));
 
-//Dati Connessione MySQL
-$db_host = $_POST['host'];
-$db_user = $_POST['user'];
-$db_pass = $_POST['pass'];
-$db_name = $_POST['name'];
-
-$db = mysql_connect ($db_host , $db_user ,$db_pass);
-/* controllo connessione avvenuta :P */
-if($db == FALSE) {
-	die("<script>alert(\"Errore!\nControllare i dati per la connessione al database MySQL\"); window.location=\"".$_SERVER['PHP_SELF']."\";</script>");
-}else{
-	$select_db = mysql_select_db ($db_name,$db);
-	if($select_db == FALSE)
-		die("<script>alert(\"Errore!\nControllare i dati per la connessione al database MySQL\"); window.location=\"".$_SERVER['PHP_SELF']."\";</script>");
-}
-	//*******************************
 $sql_settings= "CREATE TABLE ".$prefix."settings (
 	block_register INT NOT NULL,
 	maintenance INT NOT NULL
@@ -234,7 +242,7 @@ mysql_select_db ($db_name) or die (mysql_error());
 		fclose ($open); // chiudo il file
 		echo "config.php creato con successo<br />\n";
 
-	if(@unlink($_SERVER['PHP_SELF'])) { //cancello il file
+	if(@unlink("./install.php")) { //cancello il file
 		print 'File install.php cancellato<br />'."\n".'Tornare alla <a href="index.php">Home-Page</a>';
 		echo "\n<br /><font color=green>Installazione avvenuta con successo!</font>\n"; //stampo l'avvenuto successo di installazione
 	}else
@@ -258,7 +266,7 @@ body {
 <table border="0" cellpadding="2" cellspacing="2">
   <tbody>
     <tr><td>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>?action=install" method="POST">
+		<form action="?action=install" method="POST">
 			<tr><td><b>Info Generali</b></td></tr>
 			<tr><td>*Titolo Forum:</td><td><input type="text" name="site_name" /></td></tr>
 			<tr><td>*Descrizione:</td><td><input type="text" name="descrizione" /></td></tr>

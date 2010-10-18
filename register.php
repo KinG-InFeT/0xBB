@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC2
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -57,14 +57,14 @@ if (@$_GET['action'] == 'register') {
 	if(empty($email) && empty($email_check))
 		$error_msg[] = 'Inserire la E-Mail e il controllo Mail!';
 		
-	if(check_email_register($email))
+	if(check_email_register($email) == FALSE)
 		$error_msg[] = 'Email utilizzata da un\'altro account.';
 	
 	if(check_exist_user($username))
 		$error_msg[] = 'L\'Username è già esistente!';
 
 	if(!($pass == $pass_check))
-		$error_msg[] = 'Le pass inserite non combaciano';
+		$error_msg[] = 'Le password inserite non combaciano';
 		
 	if(!(check_email($email)))
 		$error_msg[] = 'L\' E-Mail inserita non è valida';		
@@ -90,7 +90,7 @@ if (@$_GET['action'] == 'register') {
 									username, password, level, text, background, email, web_site, msn
 									) VALUES (
 									'{$username}', '{$pass}', 'user', '#FFFFFF', '#000000', '{$email}', '{$web_site}', '{$msn}')";
-			if (mysql_query ($query)) 
+			mysql_query($query) or die(mysql_error());
 			
 			$sql = "INSERT INTO ".PREFIX."karma (
 											vote_user_id, vote
@@ -112,8 +112,10 @@ if (@$_GET['action'] == 'register') {
 					."Password: ".clear($pass_check)."\n\n"
 					."Ti auguriamo una buona permanenza,\n"
 					."Lo Staff ~ ".SITE_NAME.".";
-		@mail($email, $oggetto, $messaggio,"From: ".$email);
-		if(@mail)
+					
+		$check_send_mail = @mail($email, $oggetto, $messaggio,"From: ".$email);
+		
+		if($check_send_email == TRUE)
 			die("<div class=\"success_msg\" align=\"center\">\nRegistrazione Avvenuta con Successo!\n<br /><p>E-Mail di Benvenuto Inviata!</p><br />\n<a href=\"login.php\">Vai al Login</a></div>");
 		else
 			die("<div class=\"success_msg\" align=\"center\">\nRegistrazione Avvenuta con Successo!\n<br /><p>E-Mail di Benvenuto non Inviata!</p><br />\n<a href=\"login.php\">Vai al Login</a></div>");
@@ -122,9 +124,12 @@ if (@$_GET['action'] == 'register') {
 		echo '<div class="error_msg">
 			  <h3 align="center">ERRORE DI SISTEMA</h2><br />
 			  <br /><center>';
- 		foreach($error_msg as $error_message)  
-			print "$error_message <br />\n";  
-		echo "<br />\n<a href='javascript:history.back()'>Torna In Dietro</a>\n</center>\n</div>\n";
+			  
+ 		foreach($error_msg as $error_message) {
+			print $error_message." <br />\n";
+		}
+			
+		echo "<br />\n<a href='javascript:history.back()'>Torna Indietro</a>\n</center>\n</div>\n";
 	}
 }else{
 ?>

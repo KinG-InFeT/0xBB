@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC2
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -74,10 +74,6 @@ pre {
 input, textarea {
 	font-family: Verdana;
 	font-size: 11px;
-}
-
-input {
-	width: 90px;
 }
 
 .menu {
@@ -218,7 +214,7 @@ li.posttime  {
 }
 
 .new_topic {
-	width: 87%;
+	width: 70%;
 	height: 90%;
 	left: 5%;
 	top: 5%;
@@ -236,10 +232,10 @@ li.posttime  {
 }
 
 .edit {
-	width: 80%;
-	height: 80%;
+	width: 70%;
+	height: 90%;
 	left: 5%;
-	top: 2%;
+	top: 5%;
 	padding: 10px;
 }
 
@@ -254,7 +250,7 @@ li.posttime  {
 }
 
 .main_admin {
-	width: 90%;
+	width: 70%;
 	height: 75%;
 	left: 5%;
 	top: 5%;
@@ -269,8 +265,8 @@ li.posttime  {
 }
 
 .pm {
-	width: 90%;
-	height: 80%;
+	width: 70%;
+	height: 75%;
 	top: 5%;
 	left: 5%;
 	overflow: auto;
@@ -283,7 +279,7 @@ li.posttime  {
 }
 
 .settings {
-	width: 90%;
+	width: 70%;
 	height: 75%;
 	top: 5%;
 	left: 5%;

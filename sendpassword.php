@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC2
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -64,7 +64,7 @@ if($error_msg) {
 	          <br />';
  	foreach($error_msg as $error_message)
 		print "$error_message <br />\n";
-	echo "<br />\n<center><a href='javascript:history.back()'>Torna In Dietro</a>\n</center>\n</div>\n";
+	echo "<br />\n<center><a href='javascript:history.back()'>Torna Indietro</a>\n</center>\n</div>\n";
 }else{
 
 	if(check_maintenance(2) == 1) {

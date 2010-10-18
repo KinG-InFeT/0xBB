@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC2
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -28,7 +28,7 @@ show_menu ();
 $id = (int) $_GET ['id'];
 
 if (!check_topic_id ($id))
-	die ('<br /><br /><br /><div class="error_msg" align="center">ID non Specificato<br /><br /><a href="index.php">Torna alla Index</a></div>');
+	die ('<br /><br /><br /><div class="error_msg" align="center">ID Inesistente!<br /><br /><a href="index.php">Torna alla Index</a></div>');
 
 ?>
 <div class = 'path' id = 'path'>
@@ -62,10 +62,15 @@ if ($reply) {
 		
 	$query = "SELECT f_id, t_id, title FROM ".PREFIX."topic WHERE id = '{$id}'";
 	$row   = mysql_fetch_row (mysql_query ($query));
+	//Fix SQL Injection :P
+	$title = clear ($row[2]);
+	$f_id  = clear ($row[0]);
+	$t_id  = clear ($row[1]);
+	//Fine Fix
 	$query = "INSERT INTO ".PREFIX."topic (
 											f_id, t_id, author, title, data, replyof, date, ora
 										   ) VALUES (
-											'{$row [0]}', '{$row[1]}', '{$username}', 'Re: {$row [2]}', '{$reply}', '{$id}', '{$date}', '{$ora}'
+											'{$f_id}', '{$t_id}', '{$username}', 'Re: {$title}', '{$reply}', '{$id}', '{$date}', '{$ora}'
 										   )";
 	mysql_query ($query) or die (mysql_error());
 	//aggiorno il last con time()
@@ -85,7 +90,7 @@ while ($row = mysql_fetch_row ($res)) {
 		<tr>
 		<td>
 		<table class="table_info_user">
-		<tr><td class="userinfoentry">-> <font size="3"><b><?php echo $row[3]; ?> </b></font></td><td class="userinfoentry" style="text-align: right"><?php print check_level($row_info[3]); ?></td></tr>
+		<tr><td class="userinfoentry">-><font size="2"><b><?php echo $row[3]; ?></b></font></td><td class="userinfoentry" style="text-align: right"><?php print check_level($row_info[3]); ?></td></tr>
 		<tr><td class="userinfoentry">Post: </td><td class="userinfoentry" style="text-align: right"><?php print check_num_topic($row[3]); ?></td></tr>
 		<tr><td class="userinfoentry">E-Mail: </td><td class="userinfoentry" style="text-align: right"> <?php echo check_null($row_info[0],1); ?></td></tr>
 		<tr><td class="userinfoentry">MsN:</td><td class="userinfoentry" style="text-align: right"><?php echo check_null($row_info[2],1); ?></td></tr>

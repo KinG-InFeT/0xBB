@@ -1,5 +1,3 @@
-
-
 <?php
 /**************************************************************************
  * 		        		0xBB ~ Bullettin Board						      *
@@ -18,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC1
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -155,7 +153,7 @@ switch ($mode)
 			if (!$row [0])
 				die ("<div class=\"error_msg\" align=\"center\">L'Username Specificato non esiste!</div>");
 			if($row[0] == nick2uid($usr))
-				die ("<div class=\"error_msg\" align=\"center\">Già sei ADMIN?!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");				
+				die ("<div class=\"error_msg\" align=\"center\">Già sei ADMIN?!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");				
 			if ($row [1] == 'admin') 
 				$query = "UPDATE ".PREFIX."users SET level = 'user' WHERE id = '{$row [0]}'";
 			else
@@ -189,9 +187,9 @@ switch ($mode)
 			$row   = mysql_fetch_row (mysql_query ($query));
 			
 			if (!$row [0])
-				die ("<div class=\"error_msg\" align=\"center\">L'Username Specificato non esiste!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");
+				die ("<div class=\"error_msg\" align=\"center\">L'Username Specificato non esiste!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");
 			if($row[0] == nick2uid($usr))
-				die ("<div class=\"error_msg\" align=\"center\">Cancelli il tuo account?!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");				
+				die ("<div class=\"error_msg\" align=\"center\">Cancelli il tuo account?!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");				
 				
 			mysql_query("DELETE FROM ".PREFIX."users WHERE username = '{$username}'") or die ("SQL Error:".mysql_error());
 			mysql_query("DELETE FROM ".PREFIX."karma WHERE vote_user_id = '".nick2uid($username)."'") or die(mysql_error());
@@ -214,11 +212,11 @@ switch ($mode)
 			$query = "SELECT id,level FROM ".PREFIX."users WHERE username = '{$username}'";
 			$row   = mysql_fetch_row (mysql_query ($query));
 			if (!$row [0])
-				die ("<div class=\"error_msg\" align=\"center\">L'Username Specificato non esiste!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");
+				die ("<div class=\"error_msg\" align=\"center\">L'Username Specificato non esiste!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");
 			if($row[0] == nick2uid($usr))
-				die ("<div class=\"error_msg\" align=\"center\">Banni il tuo stesso account?!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");				
+				die ("<div class=\"error_msg\" align=\"center\">Banni il tuo stesso account?!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");				
 			if(nick2uid($username) == 'banned')
-				die ("<div class=\"error_msg\" align=\"center\">Questo utente è già stato BANNATO!!!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");
+				die ("<div class=\"error_msg\" align=\"center\">Questo utente è già stato BANNATO!!!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");
 			if($row[1] == 'banned')
 				mysql_query("UPDATE ".PREFIX."users SET level= 'user' WHERE username = '{$username}'") or die(mysql_error());
 			else
@@ -249,7 +247,7 @@ switch ($mode)
 			if (!$row [0])
 				die ("<div class=\"error_msg\" align=\"center\">L'Username Specificato non esiste!</div>");
 			if($row[0] == nick2uid($usr))
-				die ("<div class=\"error_msg\" align=\"center\">Non puoi diventare Mod se ora sei ADMIN!!!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");				
+				die ("<div class=\"error_msg\" align=\"center\">Non puoi diventare Mod se ora sei ADMIN!!!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");				
 			if ($row [1] == 'moderator') 
 				$query = "UPDATE ".PREFIX."users SET level = 'user' WHERE id = '{$row [0]}'";
 			else
@@ -313,7 +311,7 @@ switch ($mode)
 			$query = "SELECT * FROM ".PREFIX."ban_ip WHERE ip = '{$ip}'";
 			$row   = mysql_fetch_row (mysql_query ($query));
 			if($row[1] == nick2uid($usr))
-				die ("<div class=\"error_msg\" align=\"center\">Errore! Questo IP da bannare è identico al tuo, ti banni?<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");				
+				die ("<div class=\"error_msg\" align=\"center\">Errore! Questo IP da bannare è identico al tuo, ti banni?<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");				
 			if ($row [3] == 0) 
 				$query = "UPDATE ".PREFIX."ban_ip SET banned = '1' WHERE id = '{$row [0]}'";
 			else
@@ -395,11 +393,15 @@ switch ($mode)
 				<input type = 'submit' value = 'Modifica'></p>
 			</form>
 		<?php
-		if(!empty($_POST['operazione'])) {
-			if($_POST['operazione'] == 'attiva') {
+		if(!empty($_POST['operazione'])) 
+		{		
+			if($_POST['operazione'] == 'attiva') 
+			{
 				mysql_query("UPDATE `".PREFIX."settings` SET block_register = '0'")or die(mysql_error());
 				print '<script>alert("Iscrizioni/Registrazioni ATTIVATE!"); window.location="admin.php";</script>';
-			}elseif($_POST['operazione'] == 'disattiva') {
+				
+			}elseif($_POST['operazione'] == 'disattiva') 
+				{
 				mysql_query("UPDATE `".PREFIX."settings` SET block_register = '1'")or die(mysql_error());
 				print '<script>alert("Iscrizioni/Registrazioni DISATTIVATE!"); window.location="admin.php";</script>';
 			}
@@ -445,32 +447,37 @@ switch ($mode)
 				}
 				print "<script>alert(\"Mandate ".$emails."\"); window.location=\"admin.php\";</script>";
 			}else{
-				print "<form method='POST' action='admin.php?mode=10'>
-					<table>
-						<tr>
-							<td>Oggetto</td>
-						</tr>
-						<tr>
-        					<td><input name='oggetto' type='text' /></td>
-						</tr>
-						<tr>
-							<td>Messaggio</td>
-						</tr>
-						<tr>
-							<td>
+				print "<form method='POST' action='admin.php?mode=10'>\n
+					<table>\n
+						<tr>\n
+							<td>Oggetto</td>\n
+						</tr>\n
+						<tr>\n
+        					<td><input name='oggetto' type='text' /></td>\n
+						</tr>\n
+						<tr>\n
+							<td>Messaggio</td>\n
+						</tr>\n
+						<tr>\n
+							<td>\n
 				              <textarea rows='12' cols='50' name='text'/>\n\n\n\n
 --------------------------------------------
 News-Letter dal sito ".SITE_NAME."\n
-http://www.".$_SERVER['SERVER_NAME']."</textarea>
-							</td>
-						</tr>
-						<tr>
-							<td><input type='submit' value='Invia'/></td>
-						</tr>
-					</table>
-						</form>";
+http://www.".$_SERVER['SERVER_NAME']."</textarea>\n
+							</td>\n
+						</tr>\n
+						<tr>\n
+							<td><input type='submit' value='Invia'/></td>\n
+						</tr>\n
+					</table>\n
+						</form>\n";
   	}
 		break;
+	
+	case '11':
+		check_version();
+		echo "<p align='center'>Nessun Aggiornamento Disponibile\n<br /><br /><a href=\"admin.php\">Torna Indietro</a></p>\n";
+	break;
 		
 	default;
 	?><br /></br>
@@ -486,7 +493,9 @@ http://www.".$_SERVER['SERVER_NAME']."</textarea>
 		-> <a href = 'admin.php?mode=7'>Modalità "Manutenzione"</a><br />
 		-> <a href = 'admin.php?mode=8'>Attiva/Disattiva Registrazioni</a><br />
 		-> <a href = 'admin.php?mode=9'>Effettua un backup del Database</a><br />
-		-> <a href = 'admin.php?mode=10'>Manda una NewsLetter a tutti gli utenti registrati</a><br />		
+		-> <a href = 'admin.php?mode=10'>Manda una NewsLetter a tutti gli utenti registrati</a><br />
+		<br />
+		-> <a href = 'admin.php?mode=11'>Controlla Versione 0xBB</a><br />		
 		<?php
 	break;
 }

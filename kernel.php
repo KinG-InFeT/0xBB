@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC2
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -26,7 +26,7 @@ ob_start();
 include "config.php";
 include "impaginazione.class.php";
 
-define("VERSION","1.0 ~ RC2");//Versione della Board
+define("VERSION","1.0 - RC3");//Versione della Board
 
 list ($username, $password) = get_data ();//aquisisco i dati di autenticazione
 
@@ -96,10 +96,26 @@ function info_BBcode() {
 }//end show_header
 
 function csrf_attemp($ref) {
-	$regola = "/".SERVER_NAME."/";
+	$regola = "/".SERVER_NAME."/i";
 	if(!preg_match($regola, $ref))
 		die("CSRF/XSRF Hacking Attemp!");
 }
+
+function check_version() {
+	$link = 'http://www.0xproject.hellospace.net/versions/0xBB.txt';
+	$version_ufficial = file_get_contents($link);
+	$version = VERSION;
+	
+	if ($version != $version_ufficial) {
+		if (preg_match ("/admin.php/i", $_SERVER['SCRIPT_NAME'])) {
+			echo "<script language=\"JavaScript\">if(confirm('Uscita la versione " . $version_ufficial . ". Vuoi venire reindirizzato alla pagina di download?.'))
+				{
+				 location.href = 'http://www.0xproject.hellospace.net/#0xBB';
+			}
+			</script>";
+		}
+	}
+}	
 
 function check_block_register() {
 	$row =  mysql_fetch_row(mysql_query("SELECT block_register FROM ".PREFIX."settings"));
@@ -208,7 +224,7 @@ function random_pass($lunghezza = 6) {
 function check_email_register($email) {
 	$query = "SELECT * FROM ".PREFIX."users WHERE email = '{$email}'";
 	$row   = mysql_fetch_row (mysql_query ($query));
-	if($row[0] < 1)
+	if($row[0] > 1)
 		return FALSE;//esiste l'username quindi email non utilizzabile
 	else
 		return TRUE; //altrimenti tutto bene :D

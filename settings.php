@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC1
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -81,7 +81,7 @@ switch ($mode) {
 		@$background = clear($_POST ['background']);
 		if (($text) && ($background)) {
 			if ((!preg_match("|^[0-9A-Fa-f]{6}$|", $text)) || (!preg_match("|^[0-9A-Fa-f]{6}$|", $background)))
-				echo "Il codice Hex non è valido!";
+				echo "<div class=\"error_msg\">Il codice Hex non è valido!</div>";
 			else {
 				$text = "#".$text;
 				$background = "#".$background;
@@ -120,8 +120,16 @@ switch ($mode) {
 		@$new_email1 = $_POST ['new_email1'];
 		@$new_email2 = $_POST ['new_email2'];
 		if (($old_email) && ($new_email1) && ($new_email1 == $new_email2)) {
+		
+			if(!($old_email != $new_email1))
+				die("<br /><br /><div class=\"error_msg\"><b>Errore!</b>L' E-Mail inserita deve essere diversa da quella nuova!<br /><br /><a href='javascript: history.back ();'>Torna Indietro</a></div>");
+		
 			if(!(check_email($new_email1)))
-				die("<br /><br /><center><b>Errore!</b>L' E-Mail inserita non è valida<br /><br /><a href='javascript: history.back ();'>Torna Indietro</a></center>");
+				die("<br /><br /><div class=\"error_msg\"><b>Errore!</b>L' E-Mail inserita non è valida<br /><br /><a href='javascript: history.back ();'>Torna Indietro</a></div>");
+				
+			if(check_email_register($new_email1) == FALSE)
+				die("<br /><br /><div class=\"error_msg\"><b>Errore!</b>L' E-Mail inserita è già utilizzata da un'altro utente<br /><br /><a href='javascript: history.back ();'>Torna Indietro</a></div>");
+				
 			$query = "SELECT email FROM ".PREFIX."users WHERE username = '{$username}'";
 			$row   = mysql_fetch_row (mysql_query ($query));
 			if ($row [0] == $old_email) {
@@ -150,7 +158,7 @@ switch ($mode) {
 		if ($new_web_site) {
 				if(check_url($new_web_site) == FALSE)
 					die('<div class="error_msg" align="center">Il Sito Web inserito non è valido<br />
-						<a href=\'javascript:history.back()\'>Torna In Dietro</a></div>') ;
+						<a href=\'javascript:history.back()\'>Torna Indietro</a></div>') ;
 			$query = "UPDATE ".PREFIX."users SET web_site = '{$new_web_site}' WHERE username = '{$username}'";
 			mysql_query ($query) or die(mysql_error());
 			echo "<script>alert(\"Web Site Change Successfully.\"); window.location=\"settings.php\";</script>";

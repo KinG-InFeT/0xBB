@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC2
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -35,6 +35,7 @@ if (!is_post ($id))
 	
 $query = "SELECT * FROM ".PREFIX."topic WHERE id = '{$id}'";
 $data  = mysql_fetch_row (mysql_query ($query));
+
 if (!login ($username, $password))
 	die ("<div class=\"error_msg\" align=\"center\"><b>Errore!</b>Non sei Loggato!<br /><br /><a href=\"index.php\">Torna alla Index</a></div>");
 
@@ -49,8 +50,8 @@ if (@$_GET ['delete']) {
 	exit;
 }
 
-@$text  = BBcode (clear ($_POST ['data']));
-@$title = clear ($_POST ['title']);
+@$text  = BBcode (clear ($_POST ['text']));
+@$title = clear  ($_POST ['title']);
 
 if (($text) && ($title)) {
 	$query = "UPDATE ".PREFIX."topic SET title = '{$title}', data = '{$text}' WHERE id = '{$id}'";
@@ -69,9 +70,9 @@ if (($text) && ($title)) {
 <div class = 'edit'>
 <h2 align="center">Editor Topic</h2>
 <form action = 'manage.php?id=<?php echo $id; ?>&t_id=<?php echo $t_id; ?>' method = 'POST'>
-	Titolo: <input name = 'title' value = '<?php echo $data [4]; ?>'>
+	Titolo: <input name = 'title' value = '<?php echo $data [4]; ?>' style = "width: 50%">
 	<p>Topic:</p>
-	<textarea name = 'data' class = 'topic_data'><?php echo $text; ?></textarea>
+	<textarea name = 'text' class = 'topic_data'><?php echo $text; ?></textarea>
 	<input type = 'submit' value = 'Edit'><p>
 </form>
 	</div>

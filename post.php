@@ -36,7 +36,7 @@ if(level($username) == 'banned')
 
 $id     = (int) $_GET ['id'];
 $t_id   = rand (10000,99999);
-@$title = clear ($_POST ['title']);
+@$title = clear  ($_POST ['title']);
 @$text  = BBcode (clear ($_POST ['text']));
 $date   = (@date ("d-m-y"));
 $ora    = (@date ("G:i"));

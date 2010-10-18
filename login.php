@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC2
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -37,13 +37,17 @@ if(@$_GET['login'] == 1) {
 	
 	if(empty($username) && empty($password))
 		$error_msg[] = "<font color=red><p><i>Inserire i dati per il Login!</i><p></font>";
+		
 	elseif(login ($username, md5($password)) == FALSE)
 			$error_msg[] = "<font color=red><p><i>Dati inseriti Errati!</i><p></font>";
+			
 		elseif((check_maintenance(2) == 1) && (level($username) == 'user'))
 			$error_msg[] = "<font color=red><p><i>Login Impossibile (Forum in Modalità Manutenzione)</i><p></font>";
+			
 		elseif (login ($username, md5 ($password)) == TRUE) {
 			setcookie ("_user", $username);
 			setcookie ("_pass", md5 ($password));
+			
 			//aggiorno l'IP dell'utente nel ban_ip
 			mysql_query("UPDATE ".PREFIX."ban_ip SET ip = '".$_SERVER['REMOTE_ADDR']."' WHERE user_id = '".nick2uid($username)."'") or die(mysql_error());
 			header ("Location: index.php");
@@ -59,7 +63,7 @@ if($error_msg) {
  	foreach($error_msg as $error_message)
 		print $error_message."<br />\n";
 		
-	echo "<br />\n<center><a href='javascript:history.back()'>Torna In Dietro</a>\n</center>\n</div>\n";
+	echo "<br />\n<center><a href='javascript:history.back()'>Torna Indietro</a>\n</center>\n</div>\n";
 }else{
 
 if(check_maintenance(2) == 1) {

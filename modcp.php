@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC1
+ * Software version:			1.0 ~ RC3
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
@@ -25,7 +25,9 @@
 include "kernel.php";
 show_header();
 show_menu ();
+
 list ($username, $password) = get_data ();
+
 if (!login ($username, $password)) 
 	die ("<br /><br /><br /><div class=\"error_msg\" align=\"center\">\nACCESS DENIED\n<br /><br />\n<a href=\"index.php\">Torna alla Index</a></div>");
 	
@@ -36,6 +38,11 @@ csrf_attemp($_SERVER['HTTP_REFERER']);
 
 $usr = $username;	// solo xke mi serve un nume diverso per fare dei confronti
 ?>
+<div class = 'path' id = 'path'>
+	<table>
+		<tr><td><b><a href = 'index.php'>Indice Forum</a></b></td></tr>
+	</table>
+</div>
 <div class = 'main_admin'>
 <?php
 @$mode = $_GET ['mode'];
@@ -44,17 +51,22 @@ switch ($mode) {
 		@$username = clear ($_POST ['username']);
 		if ($username) {
 			$query = "SELECT id,level FROM ".PREFIX."users WHERE username = '{$username}'";
-			$row = mysql_fetch_row (mysql_query ($query));
+			$row   = mysql_fetch_row (mysql_query ($query));
+			
 			if (!$row [0])
-				die ("<div class=\"error_msg\" align=\"center\">L'Username Specificato non esiste!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");
+				die ("<div class=\"error_msg\" align=\"center\">L'Username Specificato non esiste!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");
+				
 			if($row[0] == nick2uid($usr))
-				die ("<div class=\"error_msg\" align=\"center\">Ti banni da solo?!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");
+				die ("<div class=\"error_msg\" align=\"center\">Ti banni da solo?!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");
+				
 			if(nick2uid($username) == 'banned')
-				die ("<div class=\"error_msg\" align=\"center\">Questo utente è già stato BANNATO!!!<br /><br /> <a href='javascript:history.back()'>Torna in Dietro</a></div>");
+				die ("<div class=\"error_msg\" align=\"center\">Questo utente è già stato BANNATO!!!<br /><br /> <a href='javascript:history.back()'>Torna Indietro</a></div>");
+				
 			if($row[1] == 'moderator')
 				mysql_query("UPDATE ".PREFIX."users SET level= 'user' WHERE username = '{$username}'") or die(mysql_error());
 			else
 				mysql_query("UPDATE ".PREFIX."users SET level= 'moderator' WHERE username = '{$username}'") or die(mysql_error());
+				
 			print '<script>window.location="modcp.php?mode=1";</script>';
 		}else{
 			echo "
@@ -82,11 +94,6 @@ switch ($mode) {
 
 ?>
 </div>
-</div>
-<div class = 'path' id = 'path'>
-	<table>
-		<tr><td><b><a href = 'index.php'>Indice Forum</a></b></td></tr>
-	</table>
 </div>
 <?php footer (); ?>
 </body>
