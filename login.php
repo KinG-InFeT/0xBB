@@ -16,19 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC3
+ * Software version:			2.0
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
  * login.php                                                        
  ***************************************************************************/
 include "kernel.php";
+
 show_header();
+
 list ($username, $password) = get_data ();
+
 if (login ($username, $password))
-	die ('<br /><br /><br /><div class="error_msg" align="center">Sei già Loggato<br /><br /><a href="index.php">Torna alla Index</a></div>');
+	_err("Hai gi&agrave; effettuato il login");
 
 show_menu ();
+
 $error_msg = array();//inizializzo l'array di errori
 
 if(@$_GET['login'] == 1) {
@@ -41,34 +45,38 @@ if(@$_GET['login'] == 1) {
 	elseif(login ($username, md5($password)) == FALSE)
 			$error_msg[] = "<font color=red><p><i>Dati inseriti Errati!</i><p></font>";
 			
-		elseif((check_maintenance(2) == 1) && (level($username) == 'user'))
-			$error_msg[] = "<font color=red><p><i>Login Impossibile (Forum in Modalità Manutenzione)</i><p></font>";
-			
-		elseif (login ($username, md5 ($password)) == TRUE) {
-			setcookie ("_user", $username);
-			setcookie ("_pass", md5 ($password));
-			
-			//aggiorno l'IP dell'utente nel ban_ip
-			mysql_query("UPDATE ".PREFIX."ban_ip SET ip = '".$_SERVER['REMOTE_ADDR']."' WHERE user_id = '".nick2uid($username)."'") or die(mysql_error());
-			header ("Location: index.php");
-			die ();
-		}else{
-			$error_msg[] = "<font color=red><p><i>Errore di Login! Riprova</i><p></font>";
-		}
+	elseif((check_maintenance(2) == 1) && (level($username) == 'user'))
+		$error_msg[] = "<font color=red><p><i>Login Impossibile (Forum in Modalità Manutenzione)</i><p></font>";
+		
+	elseif (login ($username, md5 ($password)) == TRUE && empty($error_msg)) {
+		setcookie ("0xBB_user", $username);
+		setcookie ("0xBB_pass", md5 ($password));
+		
+		//aggiorno l'IP dell'utente nel ban_ip
+		mysql_query("UPDATE ". __PREFIX__ ."ban_ip 
+						SET ip = '".$_SERVER['REMOTE_ADDR']."' 
+					  WHERE user_id = '".nick2uid($username)."'") 
+			or _err(mysql_error());
+		
+		header ("Location: index.php");
+		exit;
+	}else{
+		$error_msg[] = "<font color=red><p><i>Errore di Login! Riprova</i><p></font>";
+	}
 }
 if($error_msg) {
-	echo '<div class="error_msg">
-		  <h3 align="center">ERRORI DI SISTEMA</h2><br />
+	print '<div class="error_msg">
+		  <h3 align="center">ERRORI nella fase di LOGIN!</h2><br />
 	          <br />';
+			  
  	foreach($error_msg as $error_message)
-		print $error_message."<br />\n";
+		print $error_message . "<br />\n";
 		
-	echo "<br />\n<center><a href='javascript:history.back()'>Torna Indietro</a>\n</center>\n</div>\n";
+	print "<br />\n<center><a href='javascript:history.back()'>Torna Indietro</a>\n</center>\n</div>\n";
 }else{
 
-if(check_maintenance(2) == 1) {
-	echo "<h3 align='center'><p><font color='#FF0000'>Il Forum è in modalità Manutenzione.</font></p></h3>";
-}
+if(check_maintenance(2) == 1)
+	print "<h3 align='center'><p><font color='#FF0000'>Il Forum è in modalità Manutenzione.</font></p></h3>";
 ?>
 <div class = 'path' id = 'path'>
 	<table>
@@ -84,7 +92,7 @@ if(check_maintenance(2) == 1) {
 		<tr><td><p><input value = 'Login' type = 'submit'></p></tr></td>
 	</table>
 </form>
-<p>Se non sei ancora registrato <a href = 'register.php'>Registrati</a><br /></p>
+<p>Se non sei ancora registrato <a href = 'register.php'>Registrati</a></p>
 <p>Hai dimenticato la password? <a href = 'sendpassword.php'>Recuperala</a></p>
 </div>
 <?php
@@ -92,8 +100,7 @@ if(check_maintenance(2) == 1) {
 ?>
 </div>
 <?php
-$top = NULL;
-footer ($top);
+footer();
 ?>
 </body>
 </html>

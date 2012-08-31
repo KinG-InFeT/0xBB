@@ -16,13 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC1
+ * Software version:			2.0
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
  * users_list.php                                                        
  ***************************************************************************/
 include "kernel.php";
+
 show_header();
 show_menu ();
 ?>
@@ -31,21 +32,32 @@ show_menu ();
 		<tr><td><b><a href = 'index.php'>Indice Forum</a></b></td></tr>
 	</table>
 </div>
-	<p align="center"><br><b>Members List</b>
+	<p align="center"><br /><b>Lista Membri</b>
 	<table align="center">
-		<tr><td width="200" class="users"><p align="center"><b>Username</b></p></td><td width="200" class="users"><p align="center">E-Mail</p></td><td width="200" class="users"><p align="center">Livello</p></td></tr>
+		<tr><td width="200" class="users"><p align="center"><b>Username</b></p></td>
+		<td width="200" class="users"><p align="center">E-Mail</p></td>
+		<td width="200" class="users"><p align="center">Gruppo</p></td></tr>
 <?php
-	$query = "SELECT id, username, email, level FROM ".PREFIX."users";
+	$query = "SELECT id, username, email, level 
+				FROM ". __PREFIX__ ."users";
 	$res   = mysql_query ($query);
-	while ($row = mysql_fetch_row ($res))
-		print "<tr><td width=\"200\" class=\"users\"><b><a href = 'profile.php?id=".$row [0]."'>".$row [1]."</a><br />\n</b></td><td width=\"200\" class=\"users\">".$row[2]."</td><td width=\"200\" class=\"users\">".check_level($row[3])."</tr>";
+	
+	while ($row = mysql_fetch_row ($res)) {
+	
+		$mail = (login ($username, $password) == FALSE) ? '<i>Login richiesto!</i>' : "<a href=\"mailto:".$row[2]."\">".$row[2]."</a>";
+		
+		print "\n<tr>"
+		    . "\n<td width=\"200\" class=\"users\"><b><a href = 'profile.php?id=".$row [0]."'>".$row [1]."</a></b><br /></td>"
+		    . "\n<td width=\"200\" class=\"users\">".$mail."</td>"
+		    . "\n<td width=\"200\" class=\"users\">".check_level($row[3]). "</td>"
+		    . "\n</tr>";
+	}
 ?>
 	</table>
 <p>
 </div>
 <?php
-$top = NULL;
-footer ($top); 
+footer();
 ?>
 </body>
 </html>

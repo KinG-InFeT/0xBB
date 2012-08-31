@@ -16,13 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC1
+ * Software version:			2.0
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
  * profile.php                                                        
  ***************************************************************************/
+ 
 include "kernel.php";
+
 show_header();
 show_menu ();
 ?>
@@ -31,36 +33,38 @@ show_menu ();
 		<tr><td><b><a href = 'index.php'>Indice Forum</a></b></td></tr>
 	</table>
 </div>		
-	<div class = 'profile'>
+<br />
+<div class = 'profile'>
 <?php
 $id = (int) $_GET ['id'];
+
 if ($id) {
-	$query = "SELECT * FROM ".PREFIX."users WHERE id = '{$id}'";
-	$row   = mysql_fetch_row (mysql_query ($query));
+	$query = "SELECT * FROM ". __PREFIX__ ."users WHERE id = '". $id ."'";
+	$row   = mysql_fetch_array(mysql_query ($query));
+	
 	if ($row [0]) {
+		$mail = (login ($username, $password) == FALSE) ? '<i>Login richiesto!</i>' : check_null($row [4], 1);
 		?>
-			<h2>Profilo Utente -> <b><?php echo $row[1]; ?></b></h2>
-			<br /><br />
-			<table>
-				<tr><td><b>Invia </b></td><td><a href="pm.php?mode=3&to=<?php echo $row [1]; ?>">PM</a></td></tr>
-				<tr><td><b>E-Mail: </b></td><td><?php echo check_null($row [6],1); ?></td></tr>
-				<tr><td><b>Web Site: </b></td><td><?php echo check_null($row[7],2); ?></td></tr>
-				<tr><td><b>MsN: </b></td><td><?php echo check_null($row[8],1); ?></td></tr>		
-				<tr><td><b>Categoria: </b></td><td><?php echo check_level($row[3]); ?></td></tr>
-				<tr><td><b>Numero Post: </b></td><td><?php echo check_num_topic($row[1]); ?></td></tr>
-			</table>
+			<h2>Profilo Utente: <i><?php print $row[1]; ?></i></h2>
+			<br />
+			<div class="info_profile">
+    			<b>Invia </b><a href="pm.php?mode=3&to=<?php print $row [1]; ?>">PM</a><br />
+	    		<b>E-Mail: </b><?php print $mail; ?><br />
+	    		<b>Sito Web: </b><?php print check_null($row[5], 2); ?><br />
+        		<b>MsN: </b><?php print check_null($row[6], 1); ?><br />		
+	    		<b>Categoria: </b> <?php print check_level($row[3]); ?><br />
+	    		<b>Numero Post: </b><?php print check_num_topic($row[1]); ?><br />
+			</div>
 <?php
-	}
-}else{
-	print "\n<br /><br /><br />\n<center>Specificare un ID</center>";
-}
+	}else
+    	die(header('Location: index.php'));	
+}else
+	die(header('Location: index.php'));
 ?>
-		</div>
-</div>
+	</div>
 </div>
 <?php
-$top = NULL;
-footer ($top);
+footer();
 ?>
 </body>
 </html>

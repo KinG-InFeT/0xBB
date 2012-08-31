@@ -1,9 +1,11 @@
-							/~\	0xBB - Bulletin Board ~ README  /~\
+							.::0xBB - Bulletin Board ~ README::.
 						
-Link: http://0xproject.hellospace.net/#0xBB
+Project Link: http://0xproject.netsons.org/#0xBB
+
+BUG-TRACKER: http://0xproject.netsons.org/bug_tracker
 
 => INSTALLAZIONE
-Per installare la board seguire le seguenti operazioni:
+	Per installare la board seguire le seguenti operazioni:
 
 	1) Uplodare tutti i file nella root o nella cartella del vostro spazio web *(Note in fondo pagina)*
 	2) Accedere al sito o alla cartella dove avete uplodato tutti i file e si avvierà immediatamente l'installazione
@@ -12,25 +14,26 @@ Per installare la board seguire le seguenti operazioni:
 	5) Godetevi la vostra Bulletin Board
 	
 => UPGRADE
-
-UPGRADE da RC1 -> RC2 -> RC3 Basta solo eliminare tutti i file tranne il file config.php, e successivamente caricare
-tutti i nuovi file del nuovo pacchetto RC2 tranne il file config.php e il file install.php.
-L'upgrade è avvenuto con successo :P
+	[NEW] 
+	Aggiornamento da 1.x -> 2.0: Eliminare tutti i file tranne il config.php, successivamente uplodare tutti i file 
+	del nuovo pacchetto TRANNE config.php e install.php, ed eseguire il file di upgrade chiamato: upgrade_2_0.php e seguire le istruzioni.
+	Eliminate il file di aggiornamento upgrade_2_0.php una volta finito l'aggiornamento, avrete 0xBB v2.0 funzionante.
+	FINE!
+	
+	[OLD] 
+	Aggiornamento da RC1 -> RC2 -> RC3: Basta solo eliminare tutti i file tranne il file config.php, e successivamente caricare
+	tutti i nuovi file del nuovo pacchetto RCx tranne i file config.php e install.php.
+	FINE!
 
 => LICENZA
-
-La licenza di questo CMS è di tipo GPL quindi potrete ridistribbuire il pacchetto come volete modificarlo 
-e farci quello che volete, basta che mettiate la fonte e non eliminate i commenti dalle pagine 
+	GPL3
 
 => DOCUMENTAZIONE
-
-La documentazione (ringrazziamenti, autore, licenza ecc...) la trovate nella cartella docs rilasciata con il pacchetto
+	La documentazione (ringrazziamenti, autore, licenza ecc...) la trovate nella cartella docs rilasciata con il pacchetto
 
 *(NOTE)*
-Attenzione! Il CMS è stato creato sopra la piattaforma PHP versione superiore a 5.2.0, quindi qualora l'hosting
-non ha come default il PHP5 richiedetelo , oppure come nel caso di altervista dove basta creare una cartella chiamata php5 
-oppure settarlo dal CP e uplodare tutto dentro così la piattaforma di altervista capisce che in quella cartella bisogna 
-usare una versione del PHP superiore o uguale a 5.2.0
+	Attenzione! Per un corretto funzionamento del CMS la versione di PHP deve essere superiore o uquale a 5.2.0, 
+	se ci sono problemi richiedere all'amministratore di sistema o all'assistenza hosting la sua possibile installazione o aggiornamento.
 
 
-Project By KinG-InFeT
+Project By KinG-InFeT - http://www.kinginfet.net/

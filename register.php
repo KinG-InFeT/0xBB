@@ -16,37 +16,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC3
+ * Software version:			2.0
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
  * register.php                                                        
  ***************************************************************************/
-include "kernel.php";
-show_header();
-list ($username, $password) = get_data ();
+session_start();
 
+include "kernel.php";
+
+show_header();
 show_menu ();
 
+list ($username, $password) = get_data ();
+
 if (login ($username, $password))
-	die ("<br /><br /><br />\n<div class=\"error_msg\" align=\"center\">\n<b>Errore!</b>Sei già Registrato/Loggato al Forum.\n<br /><br />\n<a href=\"index.php\">Torna alla Index</a>\n</div>");
+	_err("<b>Errore!</b>Sei già Registrato/Loggato al Forum!");
 
 if (!check_block_register())
-	die ("<br /><br /><br />\n<div class=\"error_msg\" align=\"center\">\nLe Inscrizioni al Forum sono momentaneamente Chiuse!\n<br /><br />\n<a href=\"index.php\">Torna alla Index</a>\n</div>");
-
-$error_msg = array();//inizializzo l'array degli errori
-
-
-//aquisisco i dati dalla form
-@$username    = clear($_POST ['username']);
-@$pass        = $_POST ['pass'];
-@$pass_check  = $_POST ['pass_check'];
-@$email       = clear($_POST['email']);
-@$email_check = clear($_POST['email_check']);
-@$web_site    = clear($_POST['web_site']);
-@$msn         = clear($_POST['msn']);
+	_err("Le Inscrizioni al Forum sono momentaneamente Chiuse!");
 
 if (@$_GET['action'] == 'register') {
+
+    //aquisisco i dati dalla form
+    @$username    = clear($_POST ['username']);
+    @$pass        = $_POST ['pass'];
+    @$pass_check  = $_POST ['pass_check'];
+    @$email       = clear($_POST['email']);
+    @$email_check = clear($_POST['email_check']);
+    @$web_site    = clear($_POST['web_site']);
+    @$msn         = clear($_POST['msn']);
+    
+    $error_msg = array();
+    
+    if(empty($_POST['captcha']))
+		$error_msg[] = 'Inserire Captcha!';
+	
+	if($_POST['captcha'] != $_SESSION['captcha'])
+		$error_msg[] = 'Captcha inserito non corretto! Riprovare.';
 
 	if (empty($username))
 		$error_msg[] = 'Nessun Username Inserito!';
@@ -86,23 +94,27 @@ if (@$_GET['action'] == 'register') {
 	if(!($error_msg)) {
 
 			$pass  = md5 ($pass);
-			$query = "INSERT INTO ".PREFIX."users (
-									username, password, level, text, background, email, web_site, msn
-									) VALUES (
-									'{$username}', '{$pass}', 'user', '#FFFFFF', '#000000', '{$email}', '{$web_site}', '{$msn}')";
-			mysql_query($query) or die(mysql_error());
+			$query = "INSERT INTO ". __PREFIX__ ."users (
+						username, password, level, email, web_site, msn, theme
+					) VALUES (
+						'". $username ."', '{$pass}', 'user', '{$email}', '{$web_site}', '{$msn}', 'default.css')";
+									
+			mysql_query($query) or _err(mysql_error());
 			
-			$sql = "INSERT INTO ".PREFIX."karma (
-											vote_user_id, vote
-											) VALUES (
-											'".nick2uid($username)."', '0')";
-			mysql_query($sql) or die(mysql_error());
+			$sql = "INSERT INTO ". __PREFIX__ ."karma (
+						vote_user_id, vote
+					) VALUES (
+						'".nick2uid($username)."', '0')";
+											
+			mysql_query($sql) or _err(mysql_error());
+			
 			//ban ip inserimenti IP
-			$ban_ip = "INSERT INTO ".PREFIX."ban_ip (
-													user_id, ip, banned
-													) VALUES (
-													'".nick2uid($username)."', '".$_SERVER['REMOTE_ADDR']."', '0')";
-			mysql_query($ban_ip) or die(mysql_error());
+			$ban_ip = "INSERT INTO ". __PREFIX__ ."ban_ip (
+						user_id, ip, banned
+					) VALUES (
+						'".nick2uid($username)."', '".$_SERVER['REMOTE_ADDR']."', '0')";
+						
+			mysql_query($ban_ip) or _err(mysql_error());
 		
 		$oggetto   = "Benvenuto in ".SITE_NAME.".";
 		$messaggio = "Ciao ".$username."\n"
@@ -121,17 +133,21 @@ if (@$_GET['action'] == 'register') {
 			die("<div class=\"success_msg\" align=\"center\">\nRegistrazione Avvenuta con Successo!\n<br /><p>E-Mail di Benvenuto non Inviata!</p><br />\n<a href=\"login.php\">Vai al Login</a></div>");
 	
 	}else{
-		echo '<div class="error_msg">
-			  <h3 align="center">ERRORE DI SISTEMA</h2><br />
-			  <br /><center>';
+		print "\n<div class=\"error_msg\">"
+            . "\n<h3 align=\"center\">Errori nella form!</h2><br />"
+            . "\n<br /><center>";
 			  
  		foreach($error_msg as $error_message) {
 			print $error_message." <br />\n";
 		}
 			
-		echo "<br />\n<a href='javascript:history.back()'>Torna Indietro</a>\n</center>\n</div>\n";
+		print "<br />\n<a href='javascript:history.back()'>Torna Indietro</a>\n</center>\n</div>\n";
 	}
 }else{
+
+    $_SESSION['n1'] = rand(1,20);
+    $_SESSION['n2'] = rand(1,20);
+    $_SESSION['captcha'] = $_SESSION['n1'] + $_SESSION['n2'];
 ?>
 <div class = 'path' id = 'path'>
 	<table>
@@ -142,14 +158,15 @@ if (@$_GET['action'] == 'register') {
 <br /><br />
 	<form method = 'POST' action = 'register.php?action=register'>
 		<table align = "center">
-			<tr><td>*Username:</td><td><input name = 'username' type = 'text' maxlength='20'></td></tr>
-			<tr><td>*Password:</td><td><input name = 'pass' type = 'password'></td></tr>
-			<tr><td>*Password (again):</td><td><input name = 'pass_check' type = 'password'></td></tr>
-			<tr><td>*E-Mail:</td><td><input name = 'email' type = 'text'></td></tr>
-			<tr><td>*E-Mail (again):</td><td><input name = 'email_check' type = 'text'></td></tr>
-			<tr><td>Web Site:</td><td><input name = 'web_site' type = 'text'></td></tr>
-			<tr><td>You MsN:</td><td><input name = 'msn' type = 'text'></td></tr>
-			<tr><td><br />* : I Campi sono Obbligatori!<br /><p><input value = 'Register' type = 'submit' /><input value = 'Reset' type = 'reset' /></p></td></tr>
+			<tr><td>Username:</td><td><input name = 'username' type = 'text' maxlength='20'>*</td></tr>
+			<tr><td>Password:</td><td><input name = 'pass' type = 'password'>*</td></tr>
+			<tr><td>Password (again):</td><td><input name = 'pass_check' type = 'password'>*</td></tr>
+			<tr><td>E-Mail:</td><td><input name = 'email' type = 'text'>*</td></tr>
+			<tr><td>E-Mail (again):</td><td><input name = 'email_check' type = 'text'>*</td></tr>
+			<tr><td>Web Site:</td><td><input name = 'web_site' type = 'text'>&nbsp;</td></tr>
+			<tr><td>You MsN:</td><td><input name = 'msn' type = 'text'>&nbsp;</td></tr>
+			<tr><td>Captcha: <?php print $_SESSION['n1'] ." + ". $_SESSION['n2']; ?></td><td><input name = 'captcha' type = 'text'>*</td></tr>
+			<tr><td colspan="2>"><br />* : I Campi sono Obbligatori!<br /><p><input value = 'Register' type = 'submit' /> <input value = 'Reset' type = 'reset' /></p></td></tr>
 		</table>
 	</form>
 <?php 
@@ -158,8 +175,7 @@ if (@$_GET['action'] == 'register') {
 	</div>
 </div>
 <?php
-$top = NULL;
-footer ($top); 
+footer();
 ?>
 </body>
 </html>

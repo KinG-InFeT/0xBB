@@ -16,19 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC1
+ * Software version:			2.0
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
  * impaginazione.class.php                                                        
  ***************************************************************************/
  
-$limit = 10;//quanti topic per pagina?
- 
 class Pagination  {
 
-	function paginazione ($numHits, $limit, $page)  
-	{ 
+	function paginazione ($numHits, $limit, $page) {
 		$numHits  = (int) $numHits; 
 		$limit    = (int) $limit; 
 		$page     = (int) $page; 
@@ -44,10 +41,10 @@ class Pagination  {
 		
 		$ret = array(); 
 		
-		$ret['offset'] 		= $offset; 
-		$ret['limit'] 		= $limit;
-		$ret['numPages']	= $numPages; 
-		$ret['page']		= $page; 
+		$ret['offset'] 	 = $offset; 
+		$ret['limit'] 	 = $limit;
+		$ret['numPages'] = $numPages; 
+		$ret['page']	 = $page; 
 		
 		return $ret; 
     }

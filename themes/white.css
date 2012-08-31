@@ -1,0 +1,523 @@
+/**************************************************************************
+ * 		        		0xBB ~ Bullettin Board						      *
+ **************************************************************************
+ * This program is free software: you can redistribute it and/or modify 
+ * it under the terms of the GNU General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or   
+ * (at your option) any later version.                                  
+ *                                                                      
+ * This program is distributed in the hope that it will be useful,      
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of       
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        
+ * GNU General Public License for more details.                         
+ *                                                                      
+ * You should have received a copy of the GNU General Public License    
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ * =========================================================================*
+ * Software:					0xBB
+ * Software version:			2.0
+ * Author:						KinG-InFeT
+ * Copyleft:					GNU General Public License              
+ * =========================================================================*
+ * style.php                                                        
+ ***************************************************************************/
+
+body {
+	font-size: 11px;
+	font-family: Terminus, Monospace, Courier;
+	position: center;
+	margin: 10px;
+}
+
+table {
+	font-size: 11px;
+	overflow: none;
+}
+
+td {
+	text-align:left;
+}
+
+a:link, a:visited {
+	text-decoration: underline;
+	cursor: crosshair;
+}
+
+a:hover {
+	text-decoration: none;
+	cursor: crosshair;
+}
+
+pre {
+	font-family: Verdana;
+	font-size: 11px;
+}
+
+input, textarea {
+	font-family: Verdana;
+	font-size: 11px;
+	padding: 3px;
+}
+
+.menu {
+	border:1px solid #000000;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	width: 1000px;
+	margin: 10px auto auto auto;
+
+}
+
+.menu li {
+	display:inline;
+	margin-right:5px;
+}
+
+.main {
+	vertical-align: top;
+	position: center;
+	font-size: 13px;
+	width: 900px;
+	padding: 6px;
+	margin: 0 auto;
+}
+
+.table_info_user {
+	vertical-align: top;
+	width: 290px;
+}
+
+.table_main {
+	width: 880px;
+	padding: 6px;
+	text-align: left;
+	font-size: 11px;
+	margin: 0 auto;
+}
+
+.topicuserinfo  {
+	vertical-align: top;
+	padding: 10px;
+	width: 50px;
+}
+
+.topiccontent  {
+	vertical-align: top;
+	text-align: left;
+	padding: 10px;
+	width:700;
+}
+
+.userinfoentry  {
+	font-size: 11px;
+}
+
+li.posttime  {
+	vertical-align: top;
+	text-align: right;
+	font-size: 10px;
+	list-style-type: none
+}
+
+
+.path {
+	width: 900px;
+
+}
+
+.path li {
+	display:inline;
+}
+
+.footer  {
+	width: 990px;
+	padding: 5px;
+	clear:both;
+	overflow:auto;
+	text-align:center;
+	margin:10px auto auto auto;
+}
+.login {
+	text-align: center;
+	width: 40%;
+	left: 34%;
+	top: 30%;
+	margin:0px auto;
+}
+
+.register {
+	text-align: center;
+	width: 32%;
+	left: 34%;
+	top: 20%;
+	margin:0px auto;
+}
+
+.register td {
+	text-align:right;
+}
+
+.forum_menu {
+	width: 1000px;
+}
+
+.forums {
+	position: auto;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align:left;
+}
+
+.topic_title {
+	width: 60%;
+}
+
+.topic_author {
+	width: 25%;
+}
+
+.topic_replies {
+	width: 15%;
+}
+
+.user {
+	width: 200;
+	left: 200;
+	padding: 10px;
+}
+
+.message {
+	vertical-align: top;
+	width: 700;
+	left: 425;
+	padding: 10px;
+	overflow: auto;
+}
+
+.reply {
+	margin:5px auto;
+	padding: 10px;
+}
+
+.reply_text {
+	width:800px;
+	height:100px;
+
+}
+
+.new_topic {
+	width: 99%;
+	left: 5%;
+}
+
+.topic_data {
+	width: 90%;
+	left: 2%;
+	top: 70%;
+	height: 150px;
+}
+
+.title {
+	width: 90%;
+}
+
+.edit {
+	width: 90%;
+	left: 5%;
+	top: 5%;
+	padding: 10px;
+}
+
+.profile {
+	position: center;
+	width: 90%;
+	left: 30%;
+	top: 20%;
+	overflow: auto;
+	padding: 10px;
+	text-align: center;
+}
+
+.info_profile {
+    float: center;
+    text-align: left;
+}
+
+.main_admin {
+	width: 90%;
+	left: 5%;
+	top: 5%;
+	text-decoration:none
+	overflow: auto;
+	padding: 10px;
+}
+
+.forum_text {
+	width: 100%;
+	padding: 3px;
+}
+
+.pm {
+	width: 90%;
+	overflow: auto;
+	padding: 10px;
+	text-align: left;
+}
+
+.pm_text {
+	width: 90%;
+	height: 150px;
+	padding: 3px;
+}
+
+.message_pm {
+	border: 1px dotted black;
+}
+
+.settings {
+	width: 90%;
+	top: 5%;
+	left: 5%;
+	padding: 10px;
+}
+
+.error_msg {
+	width: 95%;
+	top: 10%;
+	color: #FF0000;
+	position: center;
+	padding: 10px;
+	border: 1px dotted red;
+}
+
+.success_msg {
+	width: 95%;
+	top: 10%;
+	color: green;
+	position: center;
+	padding: 10px;
+	border: 1px dotted green;
+}
+
+div#header {
+	border-bottom: 10px solid red;
+	border: 1px dotted red;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	text-vertical-align: midle;
+	text-align: left;
+	padding: 20px;
+	width: 960px;
+	margin:10px auto auto auto;
+}
+
+/* BBcode */
+
+.code{
+	border : 1px solid #444;
+	background-color: #C0C0C0;
+	width : 80%;
+    padding: 10px;
+    position: static;
+    overflow: auto;
+}
+
+.quote{
+	border : 1px dotted #444;
+	background-color: #E4E4E4;
+	width : 80%;
+	font-size : 12px;
+    padding: 10px;
+    position: static;
+    overflow: auto;
+}
+
+td.users  {
+	border: 1px solid #424242;
+	padding: 3px;
+}
+
+/* Fine CSS BBcode */
+
+/* CSS Karma */
+.karma_meno {
+	width: 30px;
+	border: 1px solid #FF0000;
+}
+.karma_più {
+	width: 30px;
+	border: 1px solid #00FF00;
+}
+/* Fine CSS Karma */
+
+/* Bordi e Sfondi */
+
+input, textarea {
+	background: #FFFFFF;;
+	color: #000000;
+	border: 1px solid #000000;
+}
+
+body {
+	background: #FFFFFF;
+	color: #000000;
+}
+
+a:link, a:visited {
+	color: #000000;
+}
+
+a:hover {
+	color: #000000;
+}
+.main {
+	border: 0px solid #FFFFFF;
+	text-align:left;
+}
+
+.path {
+	border: 0px solid #FFFFFF;
+}
+
+.new_topic {
+	border: 0px solid #FFFFFF;
+}
+
+.forum_menu {
+	border: 1px solid #000000;
+}
+
+.forum {
+	border: 1px solid #000000;
+}
+
+.all_topics {
+	border: 1px solid #000000;
+}
+
+.footer {
+	border: 1px solid #000000;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+}
+
+.edit {
+	border: 0px solid #FFFFFF;
+}
+
+.reply {
+	border: 1px solid #FFFFFF;
+}
+
+.table_main {
+	border: 1px solid #000000;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	background-color: #FFFFFF;
+}
+
+.topicuserinfo  {
+	border-right: 1px solid #000000;
+	border-bottom: 1px solid #000000;
+}
+
+.topiccontent  {
+	border-bottom: 1px solid #000000;
+}
+
+.userinfoentry  {
+	border-bottom: 1px dotted #000000;
+}
+
+li.posttime  {
+	border-bottom: 1px dotted #000000;
+}
+
+div#header {
+	border-bottom: 10px solid #000000;
+	border: 1px dotted #000000;
+}
+
+/* Stile inserito da Florin Lungu */
+
+#userinfo {
+	width:240px;
+	float:left;
+	padding:5px;
+	margin:5px;
+}
+
+#container {
+	width: 880px;
+	margin:0px auto auto auto;
+}
+
+#content {
+	margin:5px auto auto auto;
+	margin-bottom:10px;
+	border:1px solid #000000;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	overflow:auto;
+}
+
+#topic {
+	padding: 5px;
+	padding-left:15px;
+	width:590px;
+	float:right;
+	margin:5px;
+	margin-left:0px;
+}
+
+hr {
+	border:none;
+	border-top:1px dotted #000000;
+	margin-top:0px;
+}
+
+div {
+	overflow:auto;
+}
+
+#sinistra{
+	float:left;
+	width:200px;
+	text-align:left;
+
+}
+
+#destra{
+	float:right;
+	width:200px;
+	text-align:right;
+
+}
+
+#powered{
+	clear:both;
+	text-align:center;
+}
+
+#user_firma {
+	float:right;
+	width:600px;
+	margin:10px auto auto auto;
+	padding:10px;
+	border:1px solid #000000;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	margin:5px;
+}
+
+textarea {
+	border-radius:10px 10px 5px 10px;
+	-webkit-border-radius:10px 10px 5px 10px;
+	-moz-border-radius:10px 10px 5px 10px;
+}

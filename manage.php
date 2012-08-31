@@ -16,70 +16,108 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC3
+ * Software version:			2.0
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
  * menage.php                                                        
  ***************************************************************************/
 include "kernel.php";
+
 show_header();
 show_menu();
+
 list ($username, $password) = get_data ();
 
 $id   = (int) $_GET ['id'];
 $t_id = (int) $_GET['t_id'];
 
 if (!is_post ($id))
-	die ('<br /><br /><br /><div class="error_msg" align="center">ID Inesistente<br /><br /><a href="index.php">Torna alla Home</a></div>');
+	_err("ID Inesistente");
 	
-$query = "SELECT * FROM ".PREFIX."topic WHERE id = '{$id}'";
+$query = "SELECT * FROM ". __PREFIX__ ."topic WHERE id = '". $id ."'";
 $data  = mysql_fetch_row (mysql_query ($query));
 
 if (!login ($username, $password))
-	die ("<div class=\"error_msg\" align=\"center\"><b>Errore!</b>Non sei Loggato!<br /><br /><a href=\"index.php\">Torna alla Index</a></div>");
+	_err("<b>Errore!</b>Non sei Loggato!");
 
 if ((!level($username)) && ($username != $data [2]))
-	die ('<br /><br /><br /><div class="error_msg" align="center">Non sei autorizzato a modificare questo topic.<br /><br /><a href="index.php">Torna alla Index</a></div>');
+	_err("Non sei autorizzato a modificare questo topic!");
 
+// cancello singolo messaggio
 if (@$_GET ['delete']) {
-	$query = "DELETE FROM ".PREFIX."topic WHERE id = '{$id}' OR replyof = '{$id}'";
-	mysql_query ($query) or die(mysql_error());
-	print "<br /><br /><br /><div class=\"success_msg\" align=\"center\">Topic Cancellato con successo<br /><br /><a href='viewtopic.php?id={$t_id}'>Torna al Topic</a></div>";
-	header( "refresh:3; url=viewtopic.php?id={$t_id}" );
-	exit;
+	if(@$_GET['confirm'] == 1) {
+		$query = "DELETE FROM ". __PREFIX__ ."topic WHERE id = '". $id ."' OR replyof = '". $id ."'";
+		mysql_query ($query) or _err(mysql_error());
+		print "<br /><br /><br /><div class=\"success_msg\" align=\"center\">Topic Cancellato con successo<br /><br /><a href='viewtopic.php?id={$t_id}'>Torna al Topic</a></div>";
+		header( "refresh:3; url=viewtopic.php?id={$t_id}" );
+		exit;
+	}
+	
+	print "<script>"
+		. "\n\tif(confirm('Sei sicuro di voler eliminare il topic?') == true) {"
+		. "\n\t\tlocation.href = 'manage.php?delete=1&id=". clear($_GET['id']) ."&t_id=" . clear($_GET['t_id']) . "&confirm=1'"
+		. "\n\t}else{"
+		. "\n\t\tlocation.href = 'viewtopic.php?id=". clear($_GET['t_id']) ."'"
+		. "\n\t}"
+		. "\n</script>";
 }
 
-@$text  = BBcode (clear ($_POST ['text']));
-@$title = clear  ($_POST ['title']);
+if (!empty($_POST['text']) && !empty($_POST['title'])) {
+	@$text  = clear ($_POST['text']);
+	@$title = clear ($_POST['title']);
 
-if (($text) && ($title)) {
-	$query = "UPDATE ".PREFIX."topic SET title = '{$title}', data = '{$text}' WHERE id = '{$id}'";
-	mysql_query ($query) or die(mysql_error());
-	print "<br /><br /><br /><div class=\"success_msg\" align=\"center\">Topic Editato con successo<br /><br /><a href='viewtopic.php?id={$t_id}'>Torna al Topic</a></div>";
-	header( "refresh:3; url=viewtopic.php?id={$t_id}" );
+	$query = "UPDATE ". __PREFIX__ ."topic SET title = '". $title ."', data = '". $text ."' WHERE id = '". $id ."'";
+	mysql_query ($query) or _err(mysql_error());
+	print "<br /><br /><br /><div class=\"success_msg\" align=\"center\">Topic Editato con successo<br /><br /><a href='viewtopic.php?id=". $t_id ."'>Torna al Topic</a></div>";
+	
+	if($_id == NULL || $t_id == 0)
+		header( "refresh:3; url=index.php");
+	else
+		header( "refresh:3; url=viewtopic.php?id=". $t_id);
+		
 	exit;
 }
-@$text = clear_br (BBcode_revers ($data[5]));
 ?>
 <div class = 'path' id = 'path'>
 	<table>
-		<tr><td><b><a href = 'index.php'>Indice Forum</a></b></td></tr>
+		<tr><td><b><a href = 'viewtopic.php?id=<?php print $t_id; ?>'>Torna al Topic</a></b></td></tr>
 	</table>
 </div>
 <div class = 'edit'>
-<h2 align="center">Editor Topic</h2>
-<form action = 'manage.php?id=<?php echo $id; ?>&t_id=<?php echo $t_id; ?>' method = 'POST'>
-	Titolo: <input name = 'title' value = '<?php echo $data [4]; ?>' style = "width: 50%">
-	<p>Topic:</p>
-	<textarea name = 'text' class = 'topic_data'><?php echo $text; ?></textarea>
-	<input type = 'submit' value = 'Edit'><p>
-</form>
+	<h2 align="center">Editor Messaggio</h2><br />
+		<button name="grassetto" onclick="document.getElementById('text').value+='[b] [/b]'"><b>[b]</b></button>
+		<button name="corsivo" onclick="document.getElementById('text').value+='[i] [/i]'"><i>[i]</i></button>
+		<button name="sottolineato" onclick="document.getElementById('text').value+='[u] [/u]'"><u>[u]</u></button>
+		<button name="code" onclick="document.getElementById('text').value+='[code] [/code]'">[code]</button>
+		<button name="quote" onclick="document.getElementById('text').value+='[quote] [/quote]'">[quote]</button>
+		<button name="scrivi_rosso" onclick="document.getElementById('text').value+='[red] [/red]'"><u>[red]</u></button>
+		<button name="scrivi_verde" onclick="document.getElementById('text').value+='[green] [/green]'">[green]</button>
+		<button name="scrivi_giallo" onclick="document.getElementById('text').value+='[yellow] [/yellow]'">[yellow]</button>
+		<button name="link" onclick="document.getElementById('text').value+='[url=http://site.com/] /name_site/ [/url]'"><u>[url]</u></button>
+		<button name="youtube" onclick="document.getElementById('text').value+='[youtube] /youtube_id/ [/youtube]'">[youtube]</button>
+		<br />
+		<br />
+		<img src="img/02.jpg" alt="allegro" onclick="document.getElementById('text').value+=' :D '">
+		<img src="img/01.jpg" alt="sorriso" onclick="document.getElementById('text').value+=' :) '">
+		<img src="img/05.gif" alt="triste" onclick="document.getElementById('text').value+=' :( '">
+		<img src="img/0mg.gif" alt="omg" onclick="document.getElementById('text').value+=' 0mg '">
+		<img src="img/04.gif" alt="felice" onclick="document.getElementById('text').value+=' ^_^ '">
+		<img src="img/01.jpg" alt="ok" onclick="document.getElementById('text').value+=' ;) '">
+		<br />
+		<br />
+	<form action = 'manage.php?id=<?php print $id; ?>&t_id=<?php print $t_id; ?>' method = 'POST'>
+		Titolo: <input name = 'title' value = '<?php print $data [4]; ?>' style = "width: 50%">
+		<p>Messaggio</p>
+		<textarea id = "text" name = 'text' class = 'topic_data'><?php print $data[5]. "\n\n\n\n\n Editato il ".date("d-m-y")." alle ".date("G:i"); ?></textarea>
+		<br />
+		<input type = 'submit' value = 'Edit'>
+		<p>
+	</form>
 	</div>
 </div>
 <?php
-$top = NULL;
-footer ($top); 
+footer();
 ?>
 </body>
 </html>

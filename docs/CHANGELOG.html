@@ -1,11 +1,17 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Style-Type" content="text/css">
-<title>0xBB /::\ Changelog</title>
-<style type="text/css">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <title>0xBB /::\ Changelog</title>
+    <style type="text/css">
 <!--
+body {
+	font-size: 9px;
+	font-family: Terminus, Monospace, Courier;
+	margin: 10px;
+}
+
 p,ul,td {
 	font-size:10pt;
 }
@@ -14,6 +20,7 @@ p,ul,td {
 	font-weight:bold;
 	color:white
 }
+
 .h3 {
 	font-size:12pt;
 	color:grey
@@ -21,11 +28,11 @@ p,ul,td {
 table {
         color: #000;
         border:2px solid #333;
-        backgrodund-color: #000;/*000*/
+        backgrodund-color: #000;
 }
 tr {
     color: #fff;
-    border:1px solid #333;
+    border:0px solid #333;
     backgrodund-color: #000;
 }
 
@@ -43,306 +50,564 @@ b {
 }
 //-->
 </style>
-</head>
-<body bgcolor="#000000" text="#FFFFFF" link="#006699" vlink="#006699">
-
-<table width="100%" border="1" cellspacing="0" cellpadding="10" align="center">
-	<tr>
-		<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
-
-			<tr>
-				<td>
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-		<td><h1><big><big><big>/0xBB/<blink>_</blink></big></big></big></h1></td>
-		<td align="center" width="100%" valign="middle"><span class="maintitle">_CHANGELOG_</span></td>
-	</tr>
-</table>
-
-<!-- BEGIN DOCUMENT -->
-<ol>
-<li><a href="#changelog">Changelog</a></li>
-<ol type="i">
-	<li><a href="#legend">Legenda</a></li>
-	<br>
-	<li><a href="#rc3">0xBB v1.0 ~ RC3</a></li>	
-	<li><a href="#rc2">0xBB v1.0 ~ RC2</a></li>
-	<li><a href="#rc1">0xBB v1.0 ~ RC1</a></li>
-	<li><a href="#0.1.0_beta">0xBB v0.1.0 ~ Beta</a></li>
-	<li><a href="#0.0.2_alpha">0xBB v0.0.2 ~ Alpha</a></li>
-	<li><a href="#0.1b">WeeBB v0.1b (Release Based)</a></li>
-
-</ol>
-<li><a href="#disclaimer">Didascalia</a></li>
-</ol>
-<a name="legend"></a><h3 class="h3">Legend</h3>
-
-<ul>
-<li>Legenda:</li>
-<li>ADD = Aggiunzione/Implementazione</li>
-<li>FIX = Fix di Bug/BugFix</li>
-<li>CHANGE = Moddata/Modificata</li>
-<li>REV = Revisione/Miglioramento</li>
-<li>DEL = Eliminata</li>
-<li>! = Importante</li>
-<li>/ = Si sono fatte entrambe le cose :P</li>
-</ul>
-
-<a name="rc3"></a><h3 class="h3">0xBB v1.0 ~ RC3</h3>
-
-<ul>
-<li>[FIX] Fix di alcuni errori e una XSS nel file di installazione e revisionato completamente :P</li>
-<li>[FIX] Alcuni miglioramenti al file viewtopic.php</li>
-<li>[FIX/ADD] Aggiunto controllo in UCP se l'utete cambia email, non può inserire una mail che è già utilizzata da un altro utente</li>
-<li>[CHANGE] Alcuni settaggi nello style.php cambiati per quanto riguarda le tag input</li>
-<li>[FIX] Fix della funzione check_email_register()</li>
-<li>[REV] Piccole revisioni alla registratione register.php</li>
-<li>[CHANGE] Modificate tutte le frasi con scritto Torna In Dietro hahahah Indietro :P <b>(Thanks |M Z|</b></li>
-<li>[FIX] Fixed SQL Injection in viewtopic.php (Thanks hacku)</li>
-<li>[REV] Alcuni accorgimenti al file manage.php</li>
-<li>[CHANGE] Completamente rivisto lo style in CSS :D</li>
-<li>[REV] Alcuni cambiamenti al codice di modcp.php e pm.php</li>
-<li>[ADD] Aggiunto controllo nell'installazione per la versione PHP installata se è sufficiente </li>
-<li>[!ADD] Aggiunto controllo sulla versione installata, se è uscita una versione più aggiornata</li>
-<li>[REV] Migliorato il controllo per il CSRF</li>
-</ul>
-
-<a name="rc2"></a><h3 class="h3">0xBB v1.0 ~ RC2</h3>
-
-<ul>
-<li>[FIX] Fixato il problema in karma(aumentava di 2 invece che di 1 :P) [<b>(Thanks xEdox)</b></li>
-<li>[FIX] Fixato il problema dei caratteri per la codifica dell'html(UTF-8) <b>(Thanks Pitagora)</b></li>
-<li>[!ADD] Aggiunto modulo per il recupero Password</li>
-<li>[!ADD] Aggiunto controllo nella registrazione (se la mail è già in utilizzo da qualcun'altro)</li>
-<li>[!FIX] Fixato problema nella registrazione, quando cerano errori lo script non si ferma :S</li>
-<li>[FIX] Sistemato il problema per i caratteri <b>(Thanks Blackc0de)</b></li>
-<li>[!FIX] Sistemati i permessi per il karma, ora non è più possibile autovotarsi</li>
-<li>[REV/FIX] Revisionato il file di installazione avente dei bugs</li>
-<li>[FIX] Fixato un bug in kernel.php, la funzione clear() era scritta in malo modo</li>
-<li>[CHANGE] Moddata notevolmente la grafica in index.php (alla nullBB :P ) <b>(Thanks BlackLight)</b></li>
-<li>[DEL] Eliminate le info nel footer, rimasto solo il "Powered By"</li>
-<li>[ADD] Aggiunta la pagina stats.php dove è possibile visualizzare le statistiche nel forum, visite, utenti iscritti, ecc..</li>
-<li>[CHANGE] Sistemata la nuova grafica anche in viewforum.php</li>
-<li>[FIX] Fixato bug nella paginazione dei forum</li>
-<li>[REV] Piccola revisione al file manage.php</li>
-<li>[ADD/REV] Aggiunta lafunzione pagination per migliorare la pulizia del codice :P</li>
-<li>[FIX] Fixato l'errorino nel footer di vietopic.php</li>
-<li>[!CHANGE] Completamente cambiata la grafica in viewtopic.php ^_^ <b>(Thanks BlackLight)</b></li>
-<li>[DEL] Eliminata informazione sugli utenti online e record utenti online </li>
-<li>[FIX] Fixato il problema dell'allungamento e dell'allargamento dell'area di topic per ogni messaggio</li>
-<li>[ADD] Aggiunto controllo e messaggio se non si sono ancora creati dei forum</li>
-<li>[REV] Alcunicambiamenti all'amministrazione</li>
-<li>[ADD] Aggiunto redirect di 3 secondi dopo l'inserimento di un nuovo topic</li>
-<li>[REV] Sistemati un pò i messaggi di errore e i messaggi di successo dei relativi controlli</li>
-</ul>
-
-<a name="rc1"></a><h3 class="h3">0xBB v1.0 ~ RC1</h3>
-
-<ul>
-<li>[REV] Migliorata la funzione check_mail (love PHP5 :D)</li>
-<li>	[ADD] Aggiunta possibilità di "Chiudere" un topic</li>
-<li>		[ADD] Aggiunta Info visuale in viweforum.php che il topic è stato chiuso :D</li>
-<li>	[CHANGE] Differenziato il numero dei topic da quello dei messaggi nelle stats in home <b>(Idea By DKiller92)</b></li>
-<li>		[DEL] Eliminato informazione "Numero Forum" Un pò inutile xd</li>
-<li>	[ADD] Aggiunta la possibilità di poter bloccare le iscrizioni <b>(Idea By DKiller92)</b></li>
-<li>	[ADD] Possibilità di mettere l'intero forum in "Manutenzione" <b>(Idea By DKiller92)</b></li>
-<li>		[ADD] Il forum in modalità manutenzione è possibile utilizzarlo solo da Admin e Moderatori</li>
-<li>	[FIX] Fixato un problema in login.php <b>(Thanks _mRkZ_)</b></li>
-<li>	[REV] Migliorata l'installazione(codice e struttura notevolmente migliorata :P)</li>
-<li>		[DEL] Eliminato il file delete_install.php (Integrato in install.php)</li>
-<li>[FIX] Fixed Problema per l'utente bannato...poteva ancora postare xd</li>
-<li>   	[CHANGE] Moddata tutta la parte per i permessi...ora basate su belle scritte con la tabella chiamata level</li>
-<li>		[CHANGE] I permessi sono variati da numerico a letterale come segue admin, moderator, banned, delettato
-<li>	[REV] Sistemato il file Install.php per le nuove modifiche apportate</li>
-<li>	[REV/CHANGE] Aggiornata tutta la sintassi del CHANGELOG file ed inserita la Legenda</li>
-<li>	[!FIX] Fixed SQL Injection in settings.php <b>(Thanks the::paradox)</b></li>
-<li>	[FIX] Fixed funzione mail nella registrazione :P</li>
-<li>	[!ADD] Ban per IP <b>(Idea By _mRkZ_)</b></li>
-<li>		[ADD] Agigunta la possibilità di bannare un IP Esterno</li>
-<li>		[ADD] Aggiunto aggiornamento IP durante il Login</li>
-<li>		[ADD] Aggiunta possibilità di eliminare un IP Bannato</li>
-<li>	[!CHANGE] Moddato notevolmente il layout e sistemato un pò il CSS di tutto il forum ;)</li>
-<li>	[ADD] Aggiunto numero per i Messaggi Esistenti per ogni topic ;)</li>
-<li>	[FIX] Fixato il problema alla visualizzazione del ID in view_forum.php</li>
-<li>	[REV] Sostituito il solito link New Topic con un Pulsante</li>
-<li>	[DEL] Eliminato il controllo nel login se l'utente era Bannato, Adesso esteso alle Pagine</li>
-<li>	[REV] Sistemata la funzione login()	</li>
-<li>	[REV/FIX] Revisione dell'intero sistema karma</li>
-<li>		[CHANGE] Editata la scritta di errore in karma.php se non si era loggati :P</li>
-<li>		[FIX] Fixato un problema nella funzione karma()</li>
-<li>	[ADD] Inserito nella index.php L'ultimo topic creato/aggiornato nel forum (idea cazzuta xd)</li>
-<li>	[CHANGE] Cambio dei Font</li>
-<li>	[!ADD] Aggiunta l'impaginazione in viewforum.php</li>
-<li>	[ADD] Aggiunto argomento target nella generazione dei link nei BBcode</li>
-<li>	[DEL] Eliminato messaggio perl'installazione</li>
-<li>		[ADD] Aggiunto Redirect diretto all'installazione</li>
-<li>	[ADD] Aggiunta Possibilità di eliminare una discussione</li>
-<li>	[ADD] Aggiunta possibilità di effettuare un Backup del Database SQL del forum <b>(Thanks Huang Kai)</b></li>
-<li>	[REV] Piccola revisione nella funzione di eliminazione utenti...cancellava solo la sql in users e non in karma e ban_ip</li>
-<li>	[ADD] Aggiunta la funzione check_level in user_list.php :P</li>
-<li>	[REV] Sistemata la funzione manage_topic()</li>
-<li>	[FIX] Fixed 2 CSRF in kernel.php</li>
-<li>	[ADD] Aggiunto redirect al topic durante la chiusura dello stesso</li>
-<li>	[ADD] Aggiunto redirect al forum contenente il topic appena eliminato</li>
-<li>	[ADD] Aggiunti nuovi BBcode e inseriti pulsanti in new_topic e nella reply peri BBcode (Scritti in js Thanks Fl3' )</li>
-<li>	[FIX] Fixed il problema con i BBcode</li>
-<li>	[REV] Revisionata e migliorata le 2 funzioni BBcode() e BBcode_revers()</li>
-<li>	[REV] Aggiunto parametro alt alle smile :P (W3M compatible) <b>Thanks COED</b></li>
-<li>	[CHANGE] Cambiato letteralmente in layout del file CHANGELOG ora in stile phpBB 2.0.x :P</li>
-<li>	[ADD] Aggiunta possibilità di effettuare un Mass Mailer a tutti gli iscritti "NewsLetter"</li>
-<li>	[CHANGE] Cambiato il nome alal cartella smyle in smile (inglese mio di merda xd) e risettato parte del BBcode</li>
-<li>	[REV] Ristemata la parte inerente ai PM (Codice & layout ^_^ )</li>
-<li>	[ADD] Aggiunto controllo nell'installer se i dati di connessione al database sono corretti</li>
-<li>	[FIX] Fixed Multiple CSRF/XSRF in admin.php and modcp.php :P</li>
-<li>	[ADD] Aggiunta la visualizzazione centrale della pagina :D</li>
-<li>	[FIX] Fixed visualità patch forum e topic in viewtopic e viewforum :P</li>
-<li>	[CHANGE] Modificato il footer :P ora va molto meglio :P</li>
-<li>	[REV/CHANGE] Riscritta la funzione check_url :P</li>
-</ul>
-
-<a name="0.1.0_beta"></a><h3 class="h3">0xBB v0.1.0 ~ Beta</h3>
-
-<ul>
-<li>	[REV] Sistemato l'install.php <b>(Thanks _mRkZ_ )</b></li>
-<li>	[FIX] Fixed XSS in settings.php inserita check_url :P <b>(Thanks fedebrad)</b></li>
-<li>	[ADD] Inserito controllo Lunghezza nome utente nella registrazione <b>(Thanks DKiller92 )</b></li>
-<li>	[REV] Completamente riscritta la pagina register.php e nuovo controllo errori completamente rinnovato ;) <b>(Thanks DKiller92 )</b></li>
-<li>	[ADD] Inserita funzione check_url <b>(Thanks _mRkZ_ )</b></li>
-<li>	[ADD] Inserito la possibilità per il ban da amministrazione</li>
-<li>	[FIX] Fixed problema alla registrazione per quanto riguarda MSN, ora possibile anche omettere :P <b>(Thanks DKiller92 )</b></li>
-<li>	[ADD] Inserito il Karma :D <b>(Thanks DarkJoker and xEdox and DoMinO)</b></li>
-<li>	[ADD] Possibilità di eliminare gli utenti tramite amministrazione (solo admin)</li>
-<li>	[ADD] Inserito un padding per i div (segnalata da _mRkZ_ )</b></li>
-<li>	[FIX] Sistemato il redirect durante l'editing di un post ;)</li>
-<li>	[ADD] Aggiunta funzione check_level con la quale vislualizzeremo sia nel post che nel profilo dell'utente se esso è banned, admin o user</li>
-<li>	[FIX] Fixato un piccolo problemino con gli errori nella registrazione :P</li>
-<li>	[REV] Sistemata la pagina users_list.php per la lista degli utenti</li>
-<li>	[ADD] Aggiunta possibilità di svuotare i campi MsN e Web Site ;)</li>
-<li>	[ADD] Aggiunta informazione in viewtopic.php se l'utente è stato cancellato <b>(Thanks DarkJoker)</b></li>
-<li>	[REV] Spostato tutti i documenti nella cartella docs alla phpbb 2.0.x XD</li>
-<li>	[ADD] Inserite Funzioni patch_forum e patch_topic per rendere il codice un pò più pulito ;)</li>
-<li>	[FIX] Fixato un problema nella visualizzazione della patch corrente in viewforum.php</li>
-<li>	[FIX] Fixed redirecting durante il delettamento di un topic ;)</li>
-<li>	[ADD] Inserita la possibilità di vedere quanti topic l'utente ha scritto in viewtopic ;) (figata asd)</li>
-<li>	[ADD] Aggiunta funzione check_null ;)</li>
-<li>	[REV] Completamente revisionato l'output dell'HTML :D</li>
-<li>	[REV] Sistemata la classe register dello style</li>
-<li>	[REV] Completamente riscritta la pagina login.php cambiato il controllo errori e implementato il controllo ban</li>
-<li>	[REV] Revisionate le funzioni check_null(), check_num_topic(), check_level().</li>
-<li>	[FIX] Fixati l'output degli errori in pm.php</li>
-<li>	[CHANGE] Cambiata la codifica dell'HTML (ora settata a utf-8  ;) ) <b>(Thanks _mRkZ_ )</b></li>
-<li>	[REV] Revisionata la pagina profile.php con alcune ottimizzazioni</li>
-<li>	[ADD] Inserita possibilità di Sbannare un 'Utente</li>
-<li>	[REV] Editata un pò la funzione per il Cambio Tema, resa più intuibile e leggibile</li>
-<li>	[ADD] Aggiunti alcuni controllo errori per l'esecuzione delle SQL in admin.php</li>
-<li>	[ADD] Aggiunti i permessi per i moderatori (Il moderatore più solo bannare un user, editare e delettare i topic altrui)</li>
-<li>	[ADD] Aggiunto pannello di controllo per i moderatori ( modcp.php con la possibilità di ban utente)</li>
-<li>	[REV] Revisionata la funzione show_menu() e migliorato nel codice :P</li>
-<li>	[FIX] Fixed Problemino riguardante i permessi di accesso in admin.php e modcp.php :P</li>
-<li>	[FIX] Fixato controllo su gli username inseriti in amministrazione per il ban, add. mod e add. admin (e se l'username è lo stesso del loggato? xd)</li>
-<li>	[FIX] Fizato controllo su gli username inseriti in pannello Mod per il ban</li>
-<li>	[REV] Ultima revisione del file style.php</li>
-<li>	[FIX] Fixata SQL Injection in settings.php (Thanks Sora101 [OBT] )</li>
-<li>	[ADD] Creata pagina Thanks con i nick degli utenti che ringrazio per il progetto</li>
-</ul>
-
-<a name="0.0.2_alpha"></a><h3 class="h3">0xBB v0.0.2 ~ Alpha</h3>
-
-<ul>
-<li>	[ADD] Inserito link per il profilo dell'utente loggato inel menu </li>
-<li>	[ADD] Inserita pagina users_list.php che stampa la lista di tutti i membri registrati</li>
-<li>	[ADD] Inserita zona statistiche con numero forum creati,</li>
-<li>									numero utenti iscritti,</li>
-<li>									numero visite ricevute,</li>
-<li>									numero topic esistenti,</li>
-<li>									numero forum creati,</li>
-<li>									numero utenti connesi reali.</li>
-<li>	[REV] Sistemato l'header ed inserito in una funzione richiamata</li>
-<li>	[CHANGE/ADD] file kernel.php (function.php nel WeeBB) completamente modificato/riscritto ed alcune parti aggiunte</li>
-<li>	[ADD] Creata installazione per la board (modulo notevolmente migliorato da versioni precedenti )</li>
-<li>	[ADD] Aggiunta opzione di cancellazione del file install.php</li>
-<li>	[ADD] Aggiunta nell'installazione la possibilità di scegliere il prefix delle tabelle all'interno del database MySQL</li>
-<li>	[REV] Sistemata la registrazione (register.php)</li>
-<li>	[ADD] Integrazione di un Logo stile haxor asd (macchina da scrivere ;) )</li>
-<li>	[ADD] Aggiunta funzione BBcode nel kernel (DA AMPLIARE )</li>
-<li>	[ADD] Aggiunta inserimento email durante la registrazione</li>
-<li>	[ADD] Aggiunta info per visualizzazione email nel profilo e nei topic scritti</li>
-<li>	[CHANGE/REV] Moddata la pagina settings.php ed in alcune parti riscritta</li>
-<li>	[ADD] Possibilità di inviare un PM cliccando un link nei topic per ogni post</li>
-<li>	[ADD] Inserita info per ogni post scritto per la propria mail (file viewtopic.php)</li>
-<li>	[ADD] Inserito controllo per la validazione della mail durante la registrazione</li>
-<li>	[ADD] Aggiunto controllo durante il cambio della mail nel CP</li>
-<li>	[REV] Migliorata la pagina user_list.php</li>
-<li>	[ADD] Aggiunta mail di benvenuto per il nuovo iscritto</li>
-<li>	[ADD] Aggiunti BBcode nei post reply</li>
-<li>	[ADD] Aggiunti BBcode nei nuovi topic aperti</li>
-<li>	[ADD] Aggiunti BBcode nei nuovi forum creati</li>
-<li>	[CHANGE] Moddata la pagina manage.php ed inserito il BBcode</li>
-<li>	[FIX] Fixato piccolo problema nel post reply</li>
-<li>	[ADD] Aggiunta data e ora nei post</li>
-<li>	[REV] Sistemata la pagina dello style (file style.php)</li>
-<li>	[ADD] Aggiunte alcune smyle al BBcode</li>
-<li>	[ADD] Aggiunto Contatto MsN nella registrazione</li>
-<li>	[ADD] Aggiunto Proprio Sito Web nella registrazione</li>
-<li>	[ADD] Aggiunte tutte le info per user in ogni parte del forum : profilo, topic.</li>
-<li>	[ADD] Possibilità di cambiare contatto MsN</li>
-<li>	[ADD] Possibilità di cambiare proprio Sito Web</li>
-<li>	[REV] Revisionata quasi completamente la pagina di registrazione (register.php)</li>
-<li>	[REV] Revisione file install.php (molti cambiamenti dovute elle ultime modifiche al codice)</li>
-<li>	[REV] Bella revisione al file viewtopic.php a causa dei precedenti cambiamenti</li>
-<li>	[ADD] Inserito controllo se la board è installata oppure no(se install.php esiste ancora oppure no)</li>
-<li>	[ADD] Inserito controllo in viewtopic.php se esiste oppure no il contatto msn e il sito web (se non ci sono faremo visualizzare la scritta NULL)</li>
-<li>	[REV] Allungata un pò la parte inerente al messaggio del topic</li>
-<li>	[FIX] Fixed problema in BBcode (il riconoscimento dei link)</li>
-<li>	[ADD] Aggiunto controllo NULL in profile</li> 
-<li>	[ADD] Aggiunto BBcode per il quote [quote]</li>
-<li>	[ADD] Aggiunto link popup per il visionamento dei BBcode Esistenti (creata pagina info_BBcode.html)</li>
-<li>	[REV] Sistemata un pò l'amministrazione</li>
-<li>	[ADD] Inseriti BBcode per quote e code ( [code] [quote] ;) )</li>
-<li>	[FIX] Fixed problema per L'editing dei post (i BBcode generando l'html ed andando a editarli con l'html si creava un casino) BBcode_revers</li>
-<li>	[ADD] Aggiunta possibilità di eliminazione del topic direttamente dal Topic</li>
-<li>	[ADD] Aggiunta della grafica all'installazione</li>
-<li>	[ADD] Inserite credenziali in ogni pagina</li>
-<li>	[ADD] Inserita funzione clear_br() nel kernel, aggiunta in manage, che pulisce dai tag <br /> creati da nl2br e li converte in \n ;)</li>
-<li>	</li>
-<li>	Fase di Testing (Fix e Modifiche):</li>
-<li>		[REV] Fatte alcune modifiche al file install.php</li>
-<li>		[REV] Alcune modifiche al file delete_install.php</li>
-<li>		[CHANGE] Inserito il Prefix delle tabelle inserito in un define (prima dava rogne e non poke :P)</li>
-<li>		[DEL] Eliminata la funzione error_reporting(0); in kernel.php e isnerite tutte @ nel codice (così da essere più precisi su dei determinati errori)</li>
-<li>		[FIX] Sistemata la codifica dell'html che dava problemi</li>
-<li>		[FIX] Fixed Bug nella funzione BBcode_reverse()</li>
-<li>		[FIX] Fixed problema per l'header in login.php</li>
-</ul>
-
-<a name="0.1b"></a><h3 class="h3">WeeBB v0.1b (Base Release)</h3>
-
-<ul>
-<li>[+]Login</li>
-<li>[+]Registrazione</li>
-<li>[+]Visualizzazione di topic e forum</li>
-<li>[+]Post di nuovi topic e risposte</li>
-<li>[+]Controllo di post (modifica e cancellazione) (solo consentita agli admin)</li>
-<li>[+]Aggiunta, modifica e rimozione dei forum (solo consentita agli admin)</li>
-<li>[+]Aggiunta, rimozione di admin (solo consentita agli admin)</li>
-<li>[+]Visita dei profili</li>
-<li>[+]Invio, ricezione di messaggi privati (PM)</li>
-<li>[+]Cambio della password</li>
-<li>[+]Cambio dei colori (sfondo e testo)</li>
-</ul>
-
-<a name="disclaimer"></a><h2 class="h2"><u>Copyright e Didascalia</u></h2>
-
-<p>Questa applicazione, di tipo opensource, e' liberamente modificabile e distribuibile da tutti sotto licenza <a href="http://www.gnu.org/licenses/gpl.html" target="_new">GPL</a>.
-<br />Se si vuole partecipare al progetto o riportare un Bug o semplicemente proporre una idea in merito al CMS,
-<br />siete liberi di farlo tramite l'apposito <a href="http://0xproject.hellospace.net/forum" >FORUM</a> di supporto</p>
-				</td>
-			</tr>
-		</table></td>
-
-	</tr>
-</table>
-
-</body>
+  </head>
+  <body bgcolor="#000000" link="#006699" text="#FFFFFF" vlink="#006699">
+    <table align="center" border="1" cellpadding="10" cellspacing="0" width="100%">
+      <tbody>
+        <tr>
+          <td>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tbody>
+                <tr>
+                  <td>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <h1><big><big><big>/0xBB/<blink>_</blink></big></big></big></h1>
+                          </td>
+                          <td align="center" valign="middle" width="100%"><span
+                              class="maintitle">_CHANGELOG_</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <!-- BEGIN DOCUMENT -->
+                    <ol>
+                      <li><a href="#changelog">Changelog</a></li>
+                      <ol type="i">
+                        <li><a href="#legend">Legenda</a></li>
+                        <br>
+                        <li><a href="#2.0">0xBB v2.0</a></li>
+                        <li><a href="#rc3">0xBB v1.0 ~ RC3</a></li>
+                        <li><a href="#rc2">0xBB v1.0 ~ RC2</a></li>
+                        <li><a href="#rc1">0xBB v1.0 ~ RC1</a></li>
+                        <li><a href="#0.1.0_beta">0xBB v0.1.0 ~ Beta</a></li>
+                        <li><a href="#0.0.2_alpha">0xBB v0.0.2 ~ Alpha</a></li>
+                        <li><a href="#0.1b">WeeBB v0.1b (Release Based)</a></li>
+                      </ol>
+                      <li><a href="#disclaimer">Didascalia</a></li>
+                    </ol>
+                    <a name="legend"></a>
+                    <h3 class="h3">Legend</h3>
+                    <ul>
+                      <li>Legenda:</li>
+                      <li>ADD = Aggiunzione/Implementazione</li>
+                      <li>FIX = Fix di Bug/BugFix</li>
+                      <li>CHANGE = Moddata/Modificata</li>
+                      <li>REV = Revisione/Miglioramento</li>
+                      <li>DEL = Eliminata</li>
+                      <li>! = Importante</li>
+                      <li>/ = Si sono fatte entrambe le cose</li>
+                    </ul>
+                    <a name="2.0"></a>
+                    <h3 class="h3">0xBB v2.0</h3>
+                    <ul>
+                      <li>[FIX] Fix minori nell'installazione</li>
+                      <li>[FIX] Fix Impagination in viewforum.php</li>
+                      <li>[FIX] Fix possibile duplication t_id topic</li>
+                      <li>[FIX] Fix di tutti gli escape/caratteri speciali</li>
+                      <li>[FIX] Fix HTML code syntax</li>
+                      <li>[FIX] Fix del BBCode [code][/code]</li>
+                      <li>[FIX] Fix errore logico nel sistema di ban</li>
+                      <li>[FIX] Fix errore logico nella funzione
+                        check_maintenance()</li>
+                      <li>![FIX] Fix pagina ModCP, errori di redirect e BanIP</li>
+                      <li>![FIX] Fix errore logico in login</li>
+                      <li>![FIX] Fix errore in query SQL per la stampa dei
+                        messaggi in viewtopic.php</li>
+                      <li>![FIX] Fix false CSRF Attemp!</li>
+					  <li>![FIX] Fix elimina topic </li>
+                      <li>![FIX] Fix ByPass Maintanance Mode in recovery
+                        password</li>
+                      <li>[REV] Migliorato il file README</li>
+                      <li>[REV] Migliorati tutti i controlli</li>
+                      <li>[REV] Effettuati alcune modifiche al CHANGELOG.html</li>
+                      <li>![REV] Revisionato il BBCode e aggiunti gli escape</li>
+                      <li>![REV] Revisionata completamente la grafica e il
+                        layout (Thanks floryn90)</li>
+                      <li>[DEL] Eliminato effetto macchina da scrivere e
+                        inserito header statico con titolo e descrizione</li>
+                      <li>[DEL] Eliminata la funzione BBCode_reverse()</li>
+                      <li>[DEL] Eliminata funzione per la ricezione delle visite</li>
+                      <li>[DEL] Cancellata la pagina info_BBCode.html</li>
+                      <li>[CHANGE] Sostituiti tutti gli echo con i print</li>
+                      <li>[CHANGE] Resi possibili NULL i campi msn e web_site
+                        nella tabella users</li>
+                      <li>![CHANGE] Cambiati tutti i link che puntavano al
+                        vecchio hosting hellospace.net</li>
+                      <li>![CHANGE] Completamente riscritta la funzione per il
+                        controllo aggiornamenti</li>
+                      <li>![CHANGE] Eliminato il sistema dinamico in style.php e
+                        trasformato in statico css</li>
+                      <li>![CHANGE] Cambio nomi dei COOKIE</li>
+					  <li>![CHANGE] Cambiata la costante PREFIX in __PREFIX__</li>
+                      <li>[DEL] Eliminata funzione br()</li>
+                      <li>[DEL] Eliminata pagina stats.php e relativi link</li>
+                      <li>[ADD] Aggiunta funzionalità per i moderatori, adesso
+                        possono anche bannare indirizzi IP</li>
+                      <li>[ADD] Aggiunto nel footer qualche statistica sul forum</li>
+                      <li>[ADD] Aggiunto BBCode per video youtube</li>
+					  <li>[ADD] Aggiunta intelligenza dinamica al Path di ritorno nei CP</li>
+                      <li>[ADD] Aggiunti vari controlli a profile.php</li>
+                      <li>[ADD] Inseriti pulsanti per l'inserimento facilitato
+                        dei BBCode e smile nel post_reply</li>
+                      <li>[ADD] Inserita possibilità di modificare titolo del
+                        forum e descrizione tutto da amministrazione</li>
+                      <li>[ADD] Aggiunt abarra degli strumenti (BBCode e Smile)
+                        nell'editor messaggi</li>
+                      <li>[ADD] Centralizzata funzione per gli errori _err()</li>
+					  <li>[ADD] Aggiunte informazioni nel titolo dei topic in viewtopic.php </li>
+                      <li>[ADD] Aggiunto ora e data nel topic editato</li>
+                      <li>[ADD] Inserita conferma per l'eliminazione dei topic</li>
+                      <li>[ADD] Aggiunto controllo sulla lista di utenti da
+                        bannare</li>
+                      <li>[ADD] Aggiunto controllo sulla lista di IP da bannare</li>
+					  <li>[ADD] Aggiunto controllo per la visualizzazione delle email ad utenti che non hanno effettuato il login</li>
+                      <li>![ADD] Aggiunta la possibilità di utilizzare i BBcode
+                        anche nei PM (Messaggi Privati)</li>
+                      <li>![ADD] Aggiunto il Quote automatico nella risposta ad
+                        un PM (Messaggio privato)</li>
+                      <li>![ADD] Aggiunto avviso per amministratori e moderatori
+                        che il forum è in modalità manutenzione</li>
+                      <li>![ADD] Possibilità di aggiungere una firma per ogni
+                        utente</li>
+                      <li>![ADD] Aggiunto un captcha alle registrazioni
+                        (anti-bot)</li>
+                      <li>![ADD] Possibilità di spostare topic in altri forum</li>
+                      <li>![ADD] Aggiunta la possibilità di scegliere uno
+                        style.css per ogni utente</li>
+                      <li>![ADD] Aggiunta la funzione di reset dello style per
+                        tutti gli utenti tramite amministrazione</li>
+                      <li>![ADD] Aggiunto nuovo livello "VIP"</li>
+                      <li>![ADD] Aggiunto titolo dinamico (forum e topic)</li>
+                      <li>![ADD] Aggiunta la possibilità di ordinare la
+                        posizione dei forum in visualizzazione</li>
+                      <li>![ADD] Aggiunta la possibilità di aggiungere
+                        topic con tipologia "Annuncio"</li>
+                      <li>![ADD] Aggiunta la possibilità di aggiungere
+                        topic con tipologia "Importante"</li>
+                      <li>![ADD] Aggiunta possibilità di creare topic o forum
+                        accessibili solo a determinati membri/gruppi di utenza</li>
+                      <li>![REV] Revisionato l'intero codice sorgente</li>
+                      <li>![CHANGE/REV] CMS Completamente localizzato in
+                        italiano</li>
+                    </ul>
+                    <a name="rc3"></a>
+                    <h3 class="h3">0xBB v1.0 ~ RC3</h3>
+                    <ul>
+                      <li>[FIX] Fix di alcuni errori e una XSS nel file di
+                        installazione e revisionato completamente </li>
+                      <li>[FIX] Alcuni miglioramenti al file viewtopic.php</li>
+                      <li>[FIX/ADD] Aggiunto controllo in UCP se l'utete cambia
+                        email, non può inserire una mail che è già utilizzata da
+                        un altro utente</li>
+                      <li>[CHANGE] Alcuni settaggi nello style.php cambiati per
+                        quanto riguarda le tag input</li>
+                      <li>[FIX] Fix della funzione check_email_register()</li>
+                      <li>[REV] Piccole revisioni alla registratione
+                        register.php</li>
+                      <li>[CHANGE] Modificate tutte le frasi con scritto Torna
+                        In Dietro hahahah Indietro <b>(Thanks |M Z|)</b></li>
+                      <li>[FIX] Fixed SQL Injection in viewtopic.php (Thanks
+                        hacku)</li>
+                      <li>[REV] Alcuni accorgimenti al file manage.php</li>
+                      <li>[CHANGE] Completamente rivisto lo style in CSS </li>
+                      <li>[REV] Alcuni cambiamenti al codice di modcp.php e
+                        pm.php</li>
+                      <li>[ADD] Aggiunto controllo nell'installazione per la
+                        versione PHP installata se è sufficiente </li>
+                      <li>[!ADD] Aggiunto controllo sulla versione installata,
+                        se è uscita una versione più aggiornata</li>
+                      <li>[REV] Migliorato il controllo per il CSRF</li>
+                    </ul>
+                    <a name="rc2"></a>
+                    <h3 class="h3">0xBB v1.0 ~ RC2</h3>
+                    <ul>
+                      <li>[FIX] Fixato il problema in karma(aumentava di 2
+                        invece che di 1 ) [<b>(Thanks xEdox)</b></li>
+                      <li>[FIX] Fixato il problema dei caratteri per la codifica
+                        dell'html(UTF-8) <b>(Thanks Pitagora)</b></li>
+                      <li>[!ADD] Aggiunto modulo per il recupero Password</li>
+                      <li>[!ADD] Aggiunto controllo nella registrazione (se la
+                        mail è già in utilizzo da qualcun'altro)</li>
+                      <li>[!FIX] Fixato problema nella registrazione, quando
+                        cerano errori lo script non si ferma </li>
+                      <li>[FIX] Sistemato il problema per i caratteri <b>(Thanks
+                          Blackc0de)</b></li>
+                      <li>[!FIX] Sistemati i permessi per il karma, ora non è
+                        più possibile autovotarsi</li>
+                      <li>[REV/FIX] Revisionato il file di installazione avente
+                        dei bugs</li>
+                      <li>[FIX] Fixato un bug in kernel.php, la funzione clear()
+                        era scritta in malo modo</li>
+                      <li>[CHANGE] Moddata notevolmente la grafica in index.php
+                        (alla nullBB ) <b>(Thanks BlackLight)</b></li>
+                      <li>[DEL] Eliminate le info nel footer, rimasto solo il
+                        "Powered By"</li>
+                      <li>[ADD] Aggiunta la pagina stats.php dove è possibile
+                        visualizzare le statistiche nel forum, visite, utenti
+                        iscritti, ecc..</li>
+                      <li>[CHANGE] Sistemata la nuova grafica anche in
+                        viewforum.php</li>
+                      <li>[FIX] Fixato bug nella paginazione dei forum</li>
+                      <li>[REV] Piccola revisione al file manage.php</li>
+                      <li>[ADD/REV] Aggiunta lafunzione pagination per
+                        migliorare la pulizia del codice </li>
+                      <li>[FIX] Fixato l'errorino nel footer di vietopic.php</li>
+                      <li>[!CHANGE] Completamente cambiata la grafica in
+                        viewtopic.php <b>(Thanks BlackLight)</b></li>
+                      <li>[DEL] Eliminata informazione sugli utenti online e
+                        record utenti online </li>
+                      <li>[FIX] Fixato il problema dell'allungamento e
+                        dell'allargamento dell'area di topic per ogni messaggio</li>
+                      <li>[ADD] Aggiunto controllo e messaggio se non si sono
+                        ancora creati dei forum</li>
+                      <li>[REV] Alcunicambiamenti all'amministrazione</li>
+                      <li>[ADD] Aggiunto redirect di 3 secondi dopo
+                        l'inserimento di un nuovo topic</li>
+                      <li>[REV] Sistemati un pò i messaggi di errore e i
+                        messaggi di successo dei relativi controlli</li>
+                    </ul>
+                    <a name="rc1"></a>
+                    <h3 class="h3">0xBB v1.0 ~ RC1</h3>
+                    <ul>
+                      <li>[REV] Migliorata la funzione check_mail (love PHP5 )</li>
+                      <li> [ADD] Aggiunta possibilità di "Chiudere" un topic</li>
+                      <li> [ADD] Aggiunta Info visuale in viweforum.php che il
+                        topic è stato chiuso </li>
+                      <li> [CHANGE] Differenziato il numero dei topic da quello
+                        dei messaggi nelle stats in home <b>(Idea By DKiller92)</b></li>
+                      <li> [DEL] Eliminato informazione "Numero Forum" Un pò
+                        inutile </li>
+                      <li> [ADD] Aggiunta la possibilità di poter bloccare le
+                        iscrizioni <b>(Idea By DKiller92)</b></li>
+                      <li> [ADD] Possibilità di mettere l'intero forum in
+                        "Manutenzione" <b>(Idea By DKiller92)</b></li>
+                      <li> [ADD] Il forum in modalità manutenzione è possibile
+                        utilizzarlo solo da Admin e Moderatori</li>
+                      <li> [FIX] Fixato un problema in login.php <b>(Thanks
+                          _mRkZ_)</b></li>
+                      <li> [REV] Migliorata l'installazione(codice e struttura
+                        notevolmente migliorata )</li>
+                      <li> [DEL] Eliminato il file delete_install.php (Integrato
+                        in install.php)</li>
+                      <li>[FIX] Fixed Problema per l'utente bannato...poteva
+                        ancora postare </li>
+                      <li> [CHANGE] Moddata tutta la parte per i permessi...ora
+                        basate su belle scritte con la tabella chiamata level</li>
+                      <li> [CHANGE] I permessi sono variati da numerico a
+                        letterale come segue admin, moderator, banned, delettato
+                      </li>
+                      <li> [REV] Sistemato il file Install.php per le nuove
+                        modifiche apportate</li>
+                      <li> [REV/CHANGE] Aggiornata tutta la sintassi del
+                        CHANGELOG file ed inserita la Legenda</li>
+                      <li> [!FIX] Fixed SQL Injection in settings.php <b>(Thanks
+                          the:aradox)</b></li>
+                      <li> [FIX] Fixed funzione mail nella registrazione </li>
+                      <li> [!ADD] Ban per IP <b>(Idea By _mRkZ_)</b></li>
+                      <li> [ADD] Agigunta la possibilità di bannare un IP
+                        Esterno</li>
+                      <li> [ADD] Aggiunto aggiornamento IP durante il Login</li>
+                      <li> [ADD] Aggiunta possibilità di eliminare un IP Bannato</li>
+                      <li> [!CHANGE] Moddato notevolmente il layout e sistemato
+                        un pò il CSS di tutto il forum </li>
+                      <li> [ADD] Aggiunto numero per i Messaggi Esistenti per
+                        ogni topic </li>
+                      <li> [FIX] Fixato il problema alla visualizzazione del ID
+                        in view_forum.php</li>
+                      <li> [REV] Sostituito il solito link New Topic con un
+                        Pulsante</li>
+                      <li> [DEL] Eliminato il controllo nel login se l'utente
+                        era Bannato, Adesso esteso alle Pagine</li>
+                      <li> [REV] Sistemata la funzione login() </li>
+                      <li> [REV/FIX] Revisione dell'intero sistema karma</li>
+                      <li> [CHANGE] Editata la scritta di errore in karma.php se
+                        non si era loggati </li>
+                      <li> [FIX] Fixato un problema nella funzione karma()</li>
+                      <li> [ADD] Inserito nella index.php L'ultimo topic
+                        creato/aggiornato nel forum (idea cazzuta )</li>
+                      <li> [CHANGE] Cambio dei Font</li>
+                      <li> [!ADD] Aggiunta l'impaginazione in viewforum.php</li>
+                      <li> [ADD] Aggiunto argomento target nella generazione dei
+                        link nei BBcode</li>
+                      <li> [DEL] Eliminato messaggio perl'installazione</li>
+                      <li> [ADD] Aggiunto Redirect diretto all'installazione</li>
+                      <li> [ADD] Aggiunta Possibilità di eliminare una
+                        discussione</li>
+                      <li> [ADD] Aggiunta possibilità di effettuare un Backup
+                        del Database SQL del forum <b>(Thanks Huang Kai)</b></li>
+                      <li> [REV] Piccola revisione nella funzione di
+                        eliminazione utenti...cancellava solo la sql in users e
+                        non in karma e ban_ip</li>
+                      <li> [ADD] Aggiunta la funzione check_level in
+                        user_list.php </li>
+                      <li> [REV] Sistemata la funzione manage_topic()</li>
+                      <li> [FIX] Fixed 2 CSRF in kernel.php</li>
+                      <li> [ADD] Aggiunto redirect al topic durante la chiusura
+                        dello stesso</li>
+                      <li> [ADD] Aggiunto redirect al forum contenente il topic
+                        appena eliminato</li>
+                      <li> [ADD] Aggiunti nuovi BBcode e inseriti pulsanti in
+                        new_topic e nella reply peri BBcode (Scritti in js
+                        Thanks Fl3' )</li>
+                      <li> [FIX] Fixed il problema con i BBcode</li>
+                      <li> [REV] Revisionata e migliorata le 2 funzioni BBcode()
+                        e BBcode_revers()</li>
+                      <li> [REV] Aggiunto parametro alt alle smile (W3M
+                        compatible) <b>Thanks COED</b></li>
+                      <li> [CHANGE] Cambiato letteralmente in layout del file
+                        CHANGELOG ora in stile phpBB 2.0.x </li>
+                      <li> [ADD] Aggiunta possibilità di effettuare un Mass
+                        Mailer a tutti gli iscritti "NewsLetter"</li>
+                      <li> [CHANGE] Cambiato il nome alal cartella smyle in
+                        smile (inglese mio di merda ) e risettato parte del
+                        BBcode</li>
+                      <li> [REV] Ristemata la parte inerente ai PM (Codice &amp;
+                        layout )</li>
+                      <li> [ADD] Aggiunto controllo nell'installer se i dati di
+                        connessione al database sono corretti</li>
+                      <li> [FIX] Fixed Multiple CSRF/XSRF in admin.php and
+                        modcp.php </li>
+                      <li> [ADD] Aggiunta la visualizzazione centrale della
+                        pagina </li>
+                      <li> [FIX] Fixed visualità patch forum e topic in
+                        viewtopic e viewforum </li>
+                      <li> [CHANGE] Modificato il footer ora va molto meglio </li>
+                      <li> [REV/CHANGE] Riscritta la funzione check_url </li>
+                    </ul>
+                    <a name="0.1.0_beta"></a>
+                    <h3 class="h3">0xBB v0.1.0 ~ Beta</h3>
+                    <ul>
+                      <li> [REV] Sistemato l'install.php <b>(Thanks _mRkZ_ )</b></li>
+                      <li> [FIX] Fixed XSS in settings.php inserita check_url <b>(Thanks
+                          fedebrad)</b></li>
+                      <li> [ADD] Inserito controllo Lunghezza nome utente nella
+                        registrazione <b>(Thanks DKiller92 )</b></li>
+                      <li> [REV] Completamente riscritta la pagina register.php
+                        e nuovo controllo errori completamente rinnovato <b>(Thanks
+                          DKiller92 )</b></li>
+                      <li> [ADD] Inserita funzione check_url <b>(Thanks _mRkZ_
+                          )</b></li>
+                      <li> [ADD] Inserito la possibilità per il ban da
+                        amministrazione</li>
+                      <li> [FIX] Fixed problema alla registrazione per quanto
+                        riguarda MSN, ora possibile anche omettere <b>(Thanks
+                          DKiller92 )</b></li>
+                      <li> [ADD] Inserito il Karma <b>(Thanks DarkJoker and
+                          xEdox and DoMinO)</b></li>
+                      <li> [ADD] Possibilità di eliminare gli utenti tramite
+                        amministrazione (solo admin)</li>
+                      <li> [ADD] Inserito un padding per i div (segnalata da
+                        _mRkZ_ )</li>
+                      <li> [FIX] Sistemato il redirect durante l'editing di un
+                        post </li>
+                      <li> [ADD] Aggiunta funzione check_level con la quale
+                        vislualizzeremo sia nel post che nel profilo dell'utente
+                        se esso è banned, admin o user</li>
+                      <li> [FIX] Fixato un piccolo problemino con gli errori
+                        nella registrazione </li>
+                      <li> [REV] Sistemata la pagina users_list.php per la lista
+                        degli utenti</li>
+                      <li> [ADD] Aggiunta possibilità di svuotare i campi MsN e
+                        Web Site </li>
+                      <li> [ADD] Aggiunta informazione in viewtopic.php se
+                        l'utente è stato cancellato <b>(Thanks DarkJoker)</b></li>
+                      <li> [REV] Spostato tutti i documenti nella cartella docs
+                        alla phpbb 2.0.x </li>
+                      <li> [ADD] Inserite Funzioni patch_forum e patch_topic per
+                        rendere il codice un pò più pulito </li>
+                      <li> [FIX] Fixato un problema nella visualizzazione della
+                        patch corrente in viewforum.php</li>
+                      <li> [FIX] Fixed redirecting durante il delettamento di un
+                        topic </li>
+                      <li> [ADD] Inserita la possibilità di vedere quanti topic
+                        l'utente ha scritto in viewtopic (figata asd)</li>
+                      <li> [ADD] Aggiunta funzione check_null </li>
+                      <li> [REV] Completamente revisionato l'output dell'HTML </li>
+                      <li> [REV] Sistemata la classe register dello style</li>
+                      <li> [REV] Completamente riscritta la pagina login.php
+                        cambiato il controllo errori e implementato il controllo
+                        ban</li>
+                      <li> [REV] Revisionate le funzioni check_null(),
+                        check_num_topic(), check_level().</li>
+                      <li> [FIX] Fixati l'output degli errori in pm.php</li>
+                      <li> [CHANGE] Cambiata la codifica dell'HTML (ora settata
+                        a utf-8 ) <b>(Thanks _mRkZ_ )</b></li>
+                      <li> [REV] Revisionata la pagina profile.php con alcune
+                        ottimizzazioni</li>
+                      <li> [ADD] Inserita possibilità di Sbannare un 'Utente</li>
+                      <li> [REV] Editata un pò la funzione per il Cambio Tema,
+                        resa più intuibile e leggibile</li>
+                      <li> [ADD] Aggiunti alcuni controllo errori per
+                        l'esecuzione delle SQL in admin.php</li>
+                      <li> [ADD] Aggiunti i permessi per i moderatori (Il
+                        moderatore più solo bannare un user, editare e delettare
+                        i topic altrui)</li>
+                      <li> [ADD] Aggiunto pannello di controllo per i moderatori
+                        ( modcp.php con la possibilità di ban utente)</li>
+                      <li> [REV] Revisionata la funzione show_menu() e
+                        migliorato nel codice </li>
+                      <li> [FIX] Fixed Problemino riguardante i permessi di
+                        accesso in admin.php e modcp.php </li>
+                      <li> [FIX] Fixato controllo su gli username inseriti in
+                        amministrazione per il ban, add. mod e add. admin (e se
+                        l'username è lo stesso del loggato? )</li>
+                      <li> [FIX] Fizato controllo su gli username inseriti in
+                        pannello Mod per il ban</li>
+                      <li> [REV] Ultima revisione del file style.php</li>
+                      <li> [FIX] Fixata SQL Injection in settings.php (Thanks
+                        Sora101 [OBT] )</li>
+                      <li> [ADD] Creata pagina Thanks con i nick degli utenti
+                        che ringrazio per il progetto</li>
+                    </ul>
+                    <a name="0.0.2_alpha"></a>
+                    <h3 class="h3">0xBB v0.0.2 ~ Alpha</h3>
+                    <ul>
+                      <li> [ADD] Inserito link per il profilo dell'utente
+                        loggato inel menu </li>
+                      <li> [ADD] Inserita pagina users_list.php che stampa la
+                        lista di tutti i membri registrati</li>
+                      <li> [ADD] Inserita zona statistiche con numero forum
+                        creati,</li>
+                      <li> numero utenti iscritti,</li>
+                      <li> numero visite ricevute,</li>
+                      <li> numero topic esistenti,</li>
+                      <li> numero forum creati,</li>
+                      <li> numero utenti connesi reali.</li>
+                      <li> [REV] Sistemato l'header ed inserito in una funzione
+                        richiamata</li>
+                      <li> [CHANGE/ADD] file kernel.php (function.php nel WeeBB)
+                        completamente modificato/riscritto ed alcune parti
+                        aggiunte</li>
+                      <li> [ADD] Creata installazione per la board (modulo
+                        notevolmente migliorato da versioni precedenti )</li>
+                      <li> [ADD] Aggiunta opzione di cancellazione del file
+                        install.php</li>
+                      <li> [ADD] Aggiunta nell'installazione la possibilità di
+                        scegliere il prefix delle tabelle all'interno del
+                        database MySQL</li>
+                      <li> [REV] Sistemata la registrazione (register.php)</li>
+                      <li> [ADD] Integrazione di un Logo stile haxor asd
+                        (macchina da scrivere )</li>
+                      <li> [ADD] Aggiunta funzione BBcode nel kernel (DA
+                        AMPLIARE )</li>
+                      <li> [ADD] Aggiunta inserimento email durante la
+                        registrazione</li>
+                      <li> [ADD] Aggiunta info per visualizzazione email nel
+                        profilo e nei topic scritti</li>
+                      <li> [CHANGE/REV] Moddata la pagina settings.php ed in
+                        alcune parti riscritta</li>
+                      <li> [ADD] Possibilità di inviare un PM cliccando un link
+                        nei topic per ogni post</li>
+                      <li> [ADD] Inserita info per ogni post scritto per la
+                        propria mail (file viewtopic.php)</li>
+                      <li> [ADD] Inserito controllo per la validazione della
+                        mail durante la registrazione</li>
+                      <li> [ADD] Aggiunto controllo durante il cambio della mail
+                        nel CP</li>
+                      <li> [REV] Migliorata la pagina user_list.php</li>
+                      <li> [ADD] Aggiunta mail di benvenuto per il nuovo
+                        iscritto</li>
+                      <li> [ADD] Aggiunti BBcode nei post reply</li>
+                      <li> [ADD] Aggiunti BBcode nei nuovi topic aperti</li>
+                      <li> [ADD] Aggiunti BBcode nei nuovi forum creati</li>
+                      <li> [CHANGE] Moddata la pagina manage.php ed inserito il
+                        BBcode</li>
+                      <li> [FIX] Fixato piccolo problema nel post reply</li>
+                      <li> [ADD] Aggiunta data e ora nei post</li>
+                      <li> [REV] Sistemata la pagina dello style (file
+                        style.php)</li>
+                      <li> [ADD] Aggiunte alcune smyle al BBcode</li>
+                      <li> [ADD] Aggiunto Contatto MsN nella registrazione</li>
+                      <li> [ADD] Aggiunto Proprio Sito Web nella registrazione</li>
+                      <li> [ADD] Aggiunte tutte le info per user in ogni parte
+                        del forum : profilo, topic.</li>
+                      <li> [ADD] Possibilità di cambiare contatto MsN</li>
+                      <li> [ADD] Possibilità di cambiare proprio Sito Web</li>
+                      <li> [REV] Revisionata quasi completamente la pagina di
+                        registrazione (register.php)</li>
+                      <li> [REV] Revisione file install.php (molti cambiamenti
+                        dovute elle ultime modifiche al codice)</li>
+                      <li> [REV] Bella revisione al file viewtopic.php a causa
+                        dei precedenti cambiamenti</li>
+                      <li> [ADD] Inserito controllo se la board è installata
+                        oppure no(se install.php esiste ancora oppure no)</li>
+                      <li> [ADD] Inserito controllo in viewtopic.php se esiste
+                        oppure no il contatto msn e il sito web (se non ci sono
+                        faremo visualizzare la scritta NULL)</li>
+                      <li> [REV] Allungata un pò la parte inerente al messaggio
+                        del topic</li>
+                      <li> [FIX] Fixed problema in BBcode (il riconoscimento dei
+                        link)</li>
+                      <li> [ADD] Aggiunto controllo NULL in profile</li>
+                      <li> [ADD] Aggiunto BBcode per il quote [quote]</li>
+                      <li> [ADD] Aggiunto link popup per il visionamento dei
+                        BBcode Esistenti (creata pagina info_BBcode.html)</li>
+                      <li> [REV] Sistemata un pò l'amministrazione</li>
+                      <li> [ADD] Inseriti BBcode per quote e code ( [code]
+                        [quote] )</li>
+                      <li> [FIX] Fixed problema per L'editing dei post (i BBcode
+                        generando l'html ed andando a editarli con l'html si
+                        creava un casino) BBcode_revers</li>
+                      <li> [ADD] Aggiunta possibilità di eliminazione del topic
+                        direttamente dal Topic</li>
+                      <li> [ADD] Aggiunta della grafica all'installazione</li>
+                      <li> [ADD] Inserite credenziali in ogni pagina</li>
+                      <li> [ADD] Inserita funzione clear_br() nel kernel,
+                        aggiunta in manage, che pulisce dai tag <br>
+                        creati da nl2br e li converte in \n </li>
+                      <li> <br>
+                      </li>
+                      <li> Fase di Testing (Fix e Modifiche):</li>
+                      <li> [REV] Fatte alcune modifiche al file install.php</li>
+                      <li> [REV] Alcune modifiche al file delete_install.php</li>
+                      <li> [CHANGE] Inserito il Prefix delle tabelle inserito in
+                        un define (prima dava rogne e non poke )</li>
+                      <li> [DEL] Eliminata la funzione error_reporting(0); in
+                        kernel.php e isnerite tutte @ nel codice (così da essere
+                        più precisi su dei determinati errori)</li>
+                      <li> [FIX] Sistemata la codifica dell'html che dava
+                        problemi</li>
+                      <li> [FIX] Fixed Bug nella funzione BBcode_reverse()</li>
+                      <li> [FIX] Fixed problema per l'header in login.php</li>
+                    </ul>
+                    <a name="0.1b"></a>
+                    <h3 class="h3">WeeBB v0.1b (Base Release)</h3>
+                    <ul>
+                      <li>[+]Login</li>
+                      <li>[+]Registrazione</li>
+                      <li>[+]Visualizzazione di topic e forum</li>
+                      <li>[+]Post di nuovi topic e risposte</li>
+                      <li>[+]Controllo di post (modifica e cancellazione) (solo
+                        consentita agli admin)</li>
+                      <li>[+]Aggiunta, modifica e rimozione dei forum (solo
+                        consentita agli admin)</li>
+                      <li>[+]Aggiunta, rimozione di admin (solo consentita agli
+                        admin)</li>
+                      <li>[+]Visita dei profili</li>
+                      <li>[+]Invio, ricezione di messaggi privati (PM)</li>
+                      <li>[+]Cambio della password</li>
+                      <li>[+]Cambio dei colori (sfondo e testo)</li>
+                    </ul>
+                    <a name="disclaimer"></a>
+                    <h2 class="h2"><u>Copyright e Didascalia</u></h2>
+                    <p>Questa applicazione, di tipo open-source, e' liberamente
+                      modificabile e distribuibile da tutti sotto licenza <a href="http://www.gnu.org/licenses/gpl.html"
+                        target="_new">GPL</a>.
+                      <br>
+                      Se si vuole partecipare al progetto o riportare un Bug o
+                      semplicemente proporre una idea in merito al CMS,
+                      <br>
+                      siete liberi di farlo tramite l'apposito <a href="http://0xproject.netsons.org/bug_tracker">BUG-TRACKER</a>
+                      di supporto.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
 </html>

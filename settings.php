@@ -16,218 +16,244 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC3
+ * Software version:			2.0
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
  * settings.php                                                        
  ***************************************************************************/
 include "kernel.php";
+
 show_header();
 show_menu ();
+
 list ($username, $password) = get_data ();
 
 if (!login ($username, $password))
-	die ("<div class=\"error_msg\">Devi essere registrato per accedere qui.<br /><br /><a href=\"index.php\">Torna alla Index</a></div>");
+	die (header('Location: login.php'));
 
 if(level($username) == 'banned')
-	die ("<br /><br /><br />\n<div class=\"error_msg\" align=\"center\">\n<b>Errore!</b><br /><b><u>".$username."</u></b> è stato BANNATO dal forum!.\n<br /><br />\n<a href=\"index.php\">Torna alla Index</a>\n</div>");
+	_err("<b>[ERROR] </b><br /><b><u>". $username ."</u></b> &egrave; stato BANNATO dal forum!");
 
 csrf_attemp($_SERVER['HTTP_REFERER']);
-
-@$mode = $_GET ['mode'];
 ?>
 <div class = 'path' id = 'path'>
 	<table>
-		<tr><td><b><a href = 'index.php'>Indice Forum</a></b></td></tr>
+	<?php if(empty($_GET['mode'])) {?>
+		<tr><td><b><a href = 'index.php'>Home Forum</a></b></td></tr>
+	<?php }else{ ?>
+		<tr><td><b><a href = 'settings.php'>Home CP</a></b></td></tr>
+	<?php }?>
 	</table>
 </div>
 <div class = 'settings'>
 <?php
-switch ($mode) {
+switch (@$_GET ['mode']) {
 	case 1:
 		@$old_pass  = $_POST ['old_pass'];
 		@$new_pass1 = $_POST ['new_pass1'];
 		@$new_pass2 = $_POST ['new_pass2'];
+		
 		if (($old_pass) && ($new_pass1) && ($new_pass1 == $new_pass2)) {
 			$old_pass  = md5 ($old_pass);
 			$new_pass1 = md5 ($new_pass1);
-			$query = "SELECT password FROM ".PREFIX."users WHERE username = '{$username}'";
+			
+			$query = "SELECT password 
+						FROM ". __PREFIX__ ."users 
+					   WHERE username = '". $username ."'";
+					   
 			$row   = mysql_fetch_row (mysql_query ($query));
+			
 			if ($row [0] == $old_pass) {
-				$query = "UPDATE ".PREFIX."users SET password = '{$new_pass1}' WHERE username = '{$username}'";
+			
+				$query = "UPDATE ". __PREFIX__ ."users 
+							 SET password = '{$new_pass1}' 
+						   WHERE username = '". $username ."'";
+						   
 				mysql_query ($query);
-				setcookie ("_pass", $new_pass1);
-				echo "<script>alert(\"Password changed successfully.\"); window.location=\"settings.php\";</script>";
-			}
-			else 
-				echo "La vecchia password è ERRATA!";
-		}else {
+				
+				setcookie ("0xBB_pass", $new_pass1);
+				
+				print "<script>alert(\"Password cambiata con successo.\"); window.location=\"settings.php\";</script>";
+			}else 
+				print "<div class=\"error_msg\">La vecchia password &egrave; ERRATA!<br /><a href='javascript: history.back();'>Torna Indietro</a></div>";
+		}else{
 			?>
-			<p><b>Change password:</b><p>
+			<p><b>Cambia Password:</b><p>
 			<form method = 'POST' action = 'settings.php?mode=1'>
 				<table>
-					<tr><td>Old password:</td><td><input name = 'old_pass' type = 'password'></td></tr>
-					<tr><td>New password:</td><td><input name = 'new_pass1' type = 'password'></td></tr>
-					<tr><td>New password (again):</td><td><input name = 'new_pass2' type = 'password'></td></tr>
-					<tr><td><input type = 'submit' value = 'Change'></td></tr>
+					<tr><td>Vecchia password:</td><td><input name = 'old_pass' type = 'password'></td></tr>
+					<tr><td>Nuova password:</td><td><input name = 'new_pass1' type = 'password'></td></tr>
+					<tr><td>Nuova password (again):</td><td><input name = 'new_pass2' type = 'password'></td></tr>
+					<tr><td><input type = 'submit' value = 'Cambia'></td></tr>
 				</table>
 			</form>
 			<?php
 		}
 		break;
 	case 2:
-		@$text       = clear($_POST ['text']);
-		@$background = clear($_POST ['background']);
-		if (($text) && ($background)) {
-			if ((!preg_match("|^[0-9A-Fa-f]{6}$|", $text)) || (!preg_match("|^[0-9A-Fa-f]{6}$|", $background)))
-				echo "<div class=\"error_msg\">Il codice Hex non è valido!</div>";
-			else {
-				$text = "#".$text;
-				$background = "#".$background;
-				$query = "UPDATE ".PREFIX."users SET text = '{$text}', background = '{$background}' WHERE username = '{$username}'";
-				mysql_query ($query) or die(mysql_error());
-				echo "<script>alert(\"Colors changed successfully.\");window.location=\"settings.php\"; </script>";
+		$themes = scandir("themes/");
+
+		if (!empty($_GET['select'])) {
+			if (in_array ($_GET['select'], $themes)) {
+			
+				mysql_query("UPDATE ". __PREFIX__ ."users 
+								SET theme = '".clear($_GET['select'])."';");
+
+				print "<script>alert(\"Tema Aggiornato\"); window.location.href = 'settings.php?mode=2';</script>";
+			}else {
+				die ("<script>alert(\"Errore! Il tema non &egrave; stato trovato!\"); window.location.href = 'settings.php?mode=2';</script>");
 			}
+		}else{
+			print "<p><b>Cambia Tema:</b><p>\n<br /><br />";
+			
+			foreach ($themes as $theme)
+				if ($theme != "." && $theme != "..")
+					print "\n". $theme ." <a href = 'settings.php?mode=2&select=".$theme."'>Seleziona</a><br />";
 		}
-		?>
-		<script>
-		function change_text () {
-		        if (document.change_color.text.value.length == 6)
-		                document.getElementById ("text_try").style.background = "#"+document.change_color.text.value;
-		}		
-		function change_background () {
-		        if (document.change_color.background.value.length == 6)
-		                document.getElementById ("background_try").style.background = "#"+document.change_color.background.value;
-		}
-		</script>
-		<p><b>Change colors:</b><p>
-		<form name = 'change_color' method = 'POST' action = 'settings.php?mode=2'>
-			<table>
-				<tr><td>Text color (HEX format):</td>
-				<td><input onChange = 'change_text();' maxlength = 6 name = 'text'></td>
-				<td>Anteprima: <input id = 'text_try' readonly = 'readonly'></td></tr>
-				<tr><td>Background color (HEX format):</td>
-				<td><input onChange = 'change_background();' maxlength = 6 name = 'background'></td>
-				<td>Anteprima: <input id = 'background_try' readonly = 'readonly'></td></tr>
-				<tr><td><input type = 'submit' value = 'Change'></td></tr>
-			</table>
-		</form>
-		<?php
+		
 		break;
-	case 3;
+	case 3:
 		@$old_email  = $_POST ['old_email'];
 		@$new_email1 = $_POST ['new_email1'];
 		@$new_email2 = $_POST ['new_email2'];
+		
 		if (($old_email) && ($new_email1) && ($new_email1 == $new_email2)) {
 		
 			if(!($old_email != $new_email1))
-				die("<br /><br /><div class=\"error_msg\"><b>Errore!</b>L' E-Mail inserita deve essere diversa da quella nuova!<br /><br /><a href='javascript: history.back ();'>Torna Indietro</a></div>");
+				_err("<b>Errore!</b>L' E-Mail inserita deve essere diversa da quella nuova!");
 		
 			if(!(check_email($new_email1)))
-				die("<br /><br /><div class=\"error_msg\"><b>Errore!</b>L' E-Mail inserita non è valida<br /><br /><a href='javascript: history.back ();'>Torna Indietro</a></div>");
+				_err("<b>Errore!</b>L' E-Mail inserita non &egrave; valida!");
 				
 			if(check_email_register($new_email1) == FALSE)
-				die("<br /><br /><div class=\"error_msg\"><b>Errore!</b>L' E-Mail inserita è già utilizzata da un'altro utente<br /><br /><a href='javascript: history.back ();'>Torna Indietro</a></div>");
+				_err("<b>Errore!</b>L' E-Mail inserita &egrave; gi&agrave; utilizzata da un'altro utente!");
 				
-			$query = "SELECT email FROM ".PREFIX."users WHERE username = '{$username}'";
+			$query = "SELECT email FROM ". __PREFIX__ ."users WHERE username = '". $username ."'";
 			$row   = mysql_fetch_row (mysql_query ($query));
+			
 			if ($row [0] == $old_email) {
-				$query = "UPDATE ".PREFIX."users SET email = '{$new_email1}' WHERE username = '{$username}'";
-				mysql_query ($query) or die(mysql_error());
-				echo "<script>alert(\"E-Mail changed successfully.\"); window.location=\"settings.php\";</script>";
+				$query = "UPDATE ". __PREFIX__ ."users SET email = '". $new_email1 ."' WHERE username = '". $username ."'";
+				mysql_query ($query) or _err(mysql_error());
+				
+				print "<script>alert(\"E-Mail aggiornata con successo.\"); window.location=\"settings.php\";</script>";
 			}else 
-				echo "ERRORE! La vecchia E-Mail è errata!";
+				_err("ERRORE! La vecchia E-Mail &egrave; errata!");
 		}else{
 			?>
-			<p><b>Change E-Mail:</b><p>
+			<p><b>Cambia E-Mail:</b><p>
 			<form method = 'POST' action = 'settings.php?mode=3'>
 				<table>
-					<tr><td>Old E-Mail</td><td><input name = 'old_email' type = 'text'></td></tr>
-					<tr><td>New E-Mail:</td><td><input name = 'new_email1' type = 'text'></td></tr>
-					<tr><td>New E-Mail (again):</td><td><input name = 'new_email2' type = 'text'></td></tr>
-					<tr><td><input type = 'submit' value = 'Change'></td></tr>
+					<tr><td>Vecchia E-Mail</td><td><input name = 'old_email' type = 'text'></td></tr>
+					<tr><td>Nuova E-Mail:</td><td><input name = 'new_email1' type = 'text'></td></tr>
+					<tr><td>Nuova E-Mail (again):</td><td><input name = 'new_email2' type = 'text'></td></tr>
+					<tr><td><input type = 'submit' value = 'Cambia'></td></tr>
 				</table>
 			</form>
 			<?php
 		}
 	break;
 	
-	case 4;
-		@$new_web_site = $_POST ['new_web_site'];
-		if ($new_web_site) {
-				if(check_url($new_web_site) == FALSE)
-					die('<div class="error_msg" align="center">Il Sito Web inserito non è valido<br />
-						<a href=\'javascript:history.back()\'>Torna Indietro</a></div>') ;
-			$query = "UPDATE ".PREFIX."users SET web_site = '{$new_web_site}' WHERE username = '{$username}'";
-			mysql_query ($query) or die(mysql_error());
-			echo "<script>alert(\"Web Site Change Successfully.\"); window.location=\"settings.php\";</script>";
+	case 4:
+		
+		if(@$_GET['send'] == 1) {
+				
+			if ($_POST ['new_web_site']) {
+				if(check_url($_POST ['new_web_site']) == FALSE)
+					die('<div class="error_msg">Il Sito Web inserito non &egrave; valido<br />
+						<a href=\'javascript:history.back()\'>Torna Indietro</a></div>');
+						
+				$query = "UPDATE ". __PREFIX__ ."users SET web_site = '".$_POST['new_web_site']."' WHERE username = '". $username ."'";
+				mysql_query ($query) or _err(mysql_error());
+				
+				print "<script>alert(\"Sito web aggiornato con successo!.\"); window.location=\"settings.php\";</script>";
+			}else{
+				mysql_query("UPDATE ". __PREFIX__ ."users SET web_site = '' WHERE username = '". $username ."'");
+				print "<script>alert(\"Sito web eliminato con successo!.\"); window.location=\"settings.php\";</script>";
+			}
 		}else{
+			$web_site = mysql_fetch_row(mysql_query("SELECT web_site FROM ". __PREFIX__ ."users WHERE username = '". $username ."'"));
 			?>
-			<p><b>Change Web Site:</b><p>
-			<form method = 'POST' action = 'settings.php?mode=4'>
+			<p><b>Aggiorna Sito Web:</b><p>
+			<form method = 'POST' action = 'settings.php?mode=4&send=1'>
 				<table>
-					<tr><td>New Web Site: </td><td><input name = 'new_web_site' type = 'text' value="http://www."></td></tr>
-					<tr><td><input type = 'submit' value = 'Change'></td></tr>
+					<tr><td>* Nuovo Sito Web: </td><td> <input name = 'new_web_site' type = 'text' value="<?php print $web_site[0]; ?>" size="50"></td></tr>
+					<tr><td><input type = 'submit' value = 'Aggiorna'></td></tr>
 				</table>
+				<br />
+				* Svuotare il campo per eliminare il tuo Sito web
 			</form>
-			<form method = 'POST' action = 'settings.php?mode=clear'>
-				<input type='hidden' value='clear_web_site' name='clear' />
-				<input type="submit" value="Svuota Campo" />
+			<?php
+		}
+	break;
+	
+	case 5:
+		if(@$_GET['send'] == 1) {
+				
+			if (!empty($_POST ['new_msn'])) {
+				if(check_email($_POST ['new_msn']) == FALSE)
+					die('<div class="error_msg">Il contatto MsN inserito non &egrave; valido<br />
+						<a href=\'javascript:history.back()\'>Torna Indietro</a></div>');
+						
+				$query = "UPDATE ". __PREFIX__ ."users SET web_site = '".$_POST['new_web_site']."' WHERE username = '". $username ."'";
+				mysql_query ($query) or _err(mysql_error());
+				
+				print "<script>alert(\"Contatto MsN aggiornato con successo!.\"); window.location=\"settings.php\";</script>";
+			}else{
+				mysql_query("UPDATE ". __PREFIX__ ."users SET msn = '' WHERE username = '". $username ."'");
+				print "<script>alert(\"Contatto MsN eliminato con successo!.\"); window.location=\"settings.php\";</script>";
+			}
+		}else{
+				$msn = mysql_fetch_row(mysql_query("SELECT msn FROM ". __PREFIX__ ."users WHERE username = '". $username ."'"));
+			?>
+			<p><b>Aggiorna Contatto MsN:</b><p>
+			<form method = 'POST' action = 'settings.php?mode=5&send=1'>
+				<table>
+					<tr><td>* Nuovo contatto MsN: </td><td><input name = 'new_msn' type = 'text' value="<?php print $msn[0]; ?>" size="50"></td></tr>
+					<tr><td><input type = 'submit' value = 'Aggiorna'></td></tr>
+				</table>
+				<br />
+				* Svuotare il campo per eliminare il tuo contatto MsN
 			</form>
 			<?php			
 		}
 	break;
-	
-	case 5;
-		@$new_msn = $_POST ['new_msn'];
-		if ($new_msn) {
-			if(!(check_email($new_msn)))
-				die("<br /><br /><center><b>Errore!</b>\t Il contatto MsN inserito non è valido<br /><br /><a href='javascript: history.back ();'>Torna Indietro</a></center>");
-			$query = "UPDATE ".PREFIX."users SET msn = '{$new_msn}' WHERE username = '{$username}'";
-			mysql_query ($query) or die(mysql_error());
-			echo "<script>alert(\"MsN Contact Change Successfully.\"); window.location=\"settings.php\";</script>";
+
+	case 6:
+		@$new_firma = clear($_POST ['new_firma']);
+		
+		if ($new_firma) {
+		
+			$query = "UPDATE ". __PREFIX__ ."users SET firma = '{$new_firma}' WHERE username = '". $username ."'";
+			
+			mysql_query ($query) or _err(mysql_error());
+			
+			print "<script>alert(\"Firma Aggiornata!\"); window.location=\"settings.php\";</script>";
 		}else{
+			$firma =  mysql_fetch_row(mysql_query("SELECT firma FROM ". __PREFIX__ ."users WHERE username = '". $username ."'"));
 			?>
-			<p><b>Change MsN Contact:</b><p>
-			<form method = 'POST' action = 'settings.php?mode=5'>
-				<table>
-					<tr><td>New MsN Contact: </td><td><input name = 'new_msn' type = 'text'></td></tr>
-					<tr><td><input type = 'submit' value = 'Change'></td></tr>
-				</table>
-			</form>
-			<form method = 'POST' action = 'settings.php?mode=clear'>
-				<input type='hidden' value='clear_msn' name='clear' />
-				<input type="submit" value="Svuota Campo" />
+			<p><b>Cambia Firma:</b><p>
+			<form method = 'POST' action = 'settings.php?mode=6'>
+				Firma<br />
+				* NO HTML! Solo BBcode!
+				<br />
+				<textarea name = 'new_firma' cols="90" rows="13"><?php print htmlspecialchars($firma[0]); ?></textarea>
+				<br />
+				<input type = 'submit' value = 'Aggiorna'>
 			</form>
 			<?php
 		}
-	break;
-	
-	case 'clear';
-	
-	switch(@$_POST['clear']) {
-		case 'clear_web_site';
-			mysql_query("UPDATE ".PREFIX."users SET web_site = '' WHERE username = '{$username}'");
-			die('<div class="success_msg" align="center">Campo Svuotato!<br /><br /><a href="settings.php">Torna al Pannello</a></div>');
-		break;
-		
-		case 'clear_msn';
-			mysql_query("UPDATE ".PREFIX."users SET msn = '' WHERE username = '{$username}'");
-			die('<div class="success_msg" align="center">Campo Svuotato!<br /><br /><a href="settings.php">Torna al Pannello</a></div>');
-		break;
-	}
-	
 	break;	
 	
 	default:
 		?>
-		<p><b>Control Pannel for User: <?php echo $username; ?></b><p>
-		<a href = 'settings.php?mode=1'>-> Change password</a><br />
-		<a href = 'settings.php?mode=3'>-> Change E-Mail</a><br />
-		<a href = 'settings.php?mode=4'>-> Change My Site Web</a><br />
-		<a href = 'settings.php?mode=5'>-> Change MsN Contact</a><br />		
-		<a href = 'settings.php?mode=2'>-> Edit Theme Colors</a>
+		<p><b>Pannello di controllo Utente</b><p>
+		<a href = 'settings.php?mode=1'>-> Cambia Password</a><br />
+		<a href = 'settings.php?mode=3'>-> Cambia E-Mail</a><br />
+		<a href = 'settings.php?mode=4'>-> Cambia Sito Web</a><br />
+		<a href = 'settings.php?mode=5'>-> Cambia Contatto MsN</a><br />		
+		<a href = 'settings.php?mode=2'>-> Cambia Tema</a><br />
+		<a href = 'settings.php?mode=6'>-> Cambia Firma</a>
 		<?php
 		break;
 }
@@ -235,8 +261,7 @@ switch ($mode) {
 </div>
 </div>
 <?php
-$top = NULL;
-footer ($top);
+footer();
 ?>
 </body>
 </html>

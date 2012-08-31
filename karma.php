@@ -16,35 +16,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC2
+ * Software version:			2.0
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
  * karma.php
  ***************************************************************************/
 include "kernel.php";
+
 list ($username, $password) = get_data ();
+
 if (!login ($username, $password))
 		die ('<script>window.location="login.php";</script>');
 	
-$referer = "viewtopic.php?id={$_POST['topic_id']}";
+$referer = "viewtopic.php?id=".$_POST['topic_id'];
 $user_id = (int) $_POST['user_id'];
-$vote    =  ($_POST['vote'] > 0) ? "+1" : "-1";
+$vote    = ($_POST['vote'] > 0) ? "+1" : "-1";
 
 if(user_id($user_id) == $username) {
-	print "<script>window.location=\"{$referer}\";</script>";
+	print "<script>window.location=\"". $referer ."\";</script>";
 }else{
 
 	if(isset($user_id) && isset($vote)) {
-		$row = mysql_fetch_row (mysql_query ("SELECT vote FROM ".PREFIX."karma WHERE vote_user_id = '{$user_id}'"));
+		$row = mysql_fetch_row (mysql_query ("SELECT vote FROM ". __PREFIX__ ."karma WHERE vote_user_id = '". $user_id ."'"));
+		
 		if($vote > 0)
 			$vote_final = $row[0] + 1;
 		else
 			$vote_final = $row[0] - 1;
 			
-		$sql = "UPDATE `".PREFIX."karma` SET vote = '{$vote_final}' WHERE vote_user_id = '{$user_id}'";
-		mysql_query($sql) or die(mysql_error());
-		print "<script>window.location=\"{$referer}\";</script>";
+		$sql = "UPDATE `". __PREFIX__ ."karma` SET vote = '". $vote_final ."' WHERE vote_user_id = '". $user_id ."'";
+		
+		mysql_query($sql) or _err(mysql_error());
+		
+		print "<script>window.location=\"". $referer ."\";</script>";
 	}else{
 		print "<script>window.location=\"index.php\";</script>";
 	}

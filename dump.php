@@ -16,21 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  * =========================================================================*
  * Software:					0xBB
- * Software version:			1.0 ~ RC1
+ * Software version:			2.0
  * Author:						KinG-InFeT
  * Copyleft:					GNU General Public License              
  * =========================================================================*
  * dump.php
  ***************************************************************************/
 set_time_limit(0);
+
 include "kernel.php";
+
 list ($username, $password) = get_data ();
 
 if (!login ($username, $password)) 
-	die ("<br /><br /><br /><div class=\"error_msg\" align=\"center\">\nACCESS DENIED\n<br /><br />\n<a href=\"index.php\">Torna alla Index</a></div>");
+	_err("ACCESS DENIED");
 
 if (!(level($username) == 'admin'))
-	die ("<br /><br /><br /><div class=\"error_msg\" align=\"center\">\nACCESS DENIED\n<br /><br />\n<a href=\"index.php\">Torna alla Index</a></div>");
+	_err("ACCESS DENIED");
 
 
 if(isset($_REQUEST['esegui_backup'])) {
@@ -38,7 +40,7 @@ if(isset($_REQUEST['esegui_backup'])) {
 	$mysql_host     = $db_host;
 	$mysql_database = $db_name;
 	$mysql_username = $db_user;
-	$mysql_password = $db_pass;
+	$mysql_password = $db_pass;
 	header('Content-type: text/plain');
 	header('Content-Disposition: attachment; filename="'.$mysql_host."_".$mysql_database."_".date('YmdHis').'.sql"');
 	_mysqldump($mysql_database);
@@ -62,17 +64,17 @@ function _mysqldump($mysql_database)
 	}
 	else
 	{
-		echo "/* no tables in $mysql_database */\n";
+		print "/* no tables in $mysql_database */\n";
 	}
 	mysql_free_result($result);
 }
 
 function _mysqldump_table_structure($table)
 {
-	echo "/* Table structure for table `$table` */\n";
+	print "/* Table structure for table `$table` */\n";
 	if( isset($_REQUEST['sql_drop_table']))
 	{
-		echo "DROP TABLE IF EXISTS `$table`;\n\n";
+		print "DROP TABLE IF EXISTS `$table`;\n\n";
 	}
 	if( isset($_REQUEST['sql_create_table']))
 	{
@@ -83,7 +85,7 @@ function _mysqldump_table_structure($table)
 		{
 			if($row = mysql_fetch_assoc($result))
 			{
-				echo $row['Create Table'].";\n\n";
+				print $row['Create Table'].";\n\n";
 			}
 		}
 		mysql_free_result($result);
@@ -102,7 +104,7 @@ function _mysqldump_table_data($table)
 
 		if( $num_rows > 0)
 		{
-			echo "/* dumping data for table `$table` */\n";
+			print "/* dumping data for table `$table` */\n";
 
 			$field_type = array();
 			$i = 0;
@@ -113,21 +115,21 @@ function _mysqldump_table_data($table)
 				$i++;
 			}
 
-			echo "INSERT INTO `$table` VALUES\n";
+			print "INSERT INTO `$table` VALUES\n";
 			$index = 0;
 			while( $row = mysql_fetch_row($result))
 			{
-				echo "(";
+				print "(";
 				for( $i = 0; $i < $num_fields; $i++)
 				{
 					if( is_null( $row[$i]) )
-						echo "null";
+						print "null";
 					else
 					{
 						switch( $field_type[$i])
 						{
 							case 'int':
-								echo $row[$i];
+								print $row[$i];
 							break;
 							
 							case 'string':
@@ -135,28 +137,28 @@ function _mysqldump_table_data($table)
 							case 'blob' :
 							
 							default:
-								echo "'".mysql_real_escape_string($row[$i])."'";
+								print "'".mysql_real_escape_string($row[$i])."'";
 
 						}
 					}
 					if( $i < $num_fields - 1)
-						echo ",";
+						print ",";
 				}
 				
-				echo ")";
+				print ")";
 
 				if( $index < $num_rows - 1)
-					echo ",";
+					print ",";
 				else
-					echo ";";
+					print ";";
 					
-				echo "\n";
+				print "\n";
 
 				$index++;
 			}
 		}
 	}
 	mysql_free_result($result);
-	echo "\n";
+	print "\n";
 }
 ?>
